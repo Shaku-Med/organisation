@@ -1,0 +1,12 @@
+{
+  "short_name": "organization",
+  "name": "organization",
+  "icons": [
+    {
+      "src": "mainlogo.png",
+      "sizes": "300x300",
+      "type": "image/x-icon"
+    }
+  ],
+  "display": "standalone"
+}
