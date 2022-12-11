@@ -1,38 +1,907 @@
-.App {
-  text-align: center;
+:root{ 
+  color-scheme: light;
+  --mainbg: #fff;
+  --color: #000;
+  --borders: #eaeaea9e;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+*{ 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+::-webkit-scrollbar{ 
+  display: none;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+body{ 
+  margin: 0;
+  padding: 0;
+  background: var(--mainbg);
+  color: var(--color);
+  scroll-behavior: smooth;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html { 
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  overflow: hidden;
+}
+
+.nav_top { 
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  width: 100%;
+  background: var(--mainbg);
+  border-bottom: 1px solid var(--borders);
+  z-index: 7000000000;
+  position: fixed;
+  top:0;
+}
+
+.nav_cont { 
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  gap:20px;
+  padding:5px;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.nav_f img { 
+  width: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+}
+
+.nav_f .logos { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.nav_mid { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+}
+
+.tools1 img { 
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.tools1 { 
+  padding:10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tools1:not(:last-child):hover{ 
+  background: var(--borders);
+}
+
+.left_mt { 
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: fixed;
+  top:0;
+  left: 0;
+  max-width: 400px;
+  padding-top: 80px;
+  text-align: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-right: 1px solid var(--borders);
+  height: 100%;
+  overflow: auto;
+}
+
+.left_mt img { 
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.home_page { 
+  width: 100%;
+  padding-left: 400px;
+  margin-top: 53px;
+  padding-top: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.hero_img { 
+  background-image: linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url('https://p4.wallpaperbetter.com/wallpaper/567/948/11/guy-sunset-sky-wallpaper-preview.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding:40px 0px 0px 10px;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.hero_text { 
+  padding:10px;
+}
+
+.hero_text .h1 { 
+  font-size: 70px;
+}
+
+.hero_text .buttons { 
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap:10px;
+}
+
+.users_available { 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:10px;
+}
+
+.availe_con { 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap:10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.cardd_1 { 
+  width: 100%;
+  background:var(--mainbg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 1px solid var(--borders);
+}
+
+.cardd_1 img { 
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.namve_s { 
+  padding:10px;
+}
+
+.namve_s .buttons{ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  margin-top: 20px;
+}
+
+.bgimg { 
+  background-image: linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url('https://p4.wallpaperbetter.com/wallpaper/567/948/11/guy-sunset-sky-wallpaper-preview.jpg');
+  background-position: center ;
+  width: 100%;
+  height: 200px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 20px;
+}
+
+.profile_co { 
+  margin-top: 100px;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.groups_mem { 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  padding:10px;
+}
+
+.alert_mess { 
+  padding:10px;
+  border: 1px solid var(--borders);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.video_play_con { 
+  overflow: hidden;
+}
+
+.video_play_con video{ 
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+
+.alert_mess .h4{ 
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap:10px;
+}
+
+.alert_mess img { 
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.previews_m { 
+  width: 100%;
+  padding-left: 400px;
+  margin-top: 53px;
+  padding-top: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pvvl { 
+  padding:10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.pvvl form { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  padding:10px;
+  border: 1px solid var(--borders);
+}
+
+.pvvl .col { 
+  width: 100%;
+}
+
+.pvvl input{ 
+  width: 100%;
+  padding:10px;
+  border-radius: 5px;
+  border: 1px solid var(--borders);
+  margin-top: 10px;
+}
+
+.pvvl textarea{ 
+  width: 100%;
+  padding:10px;
+  border-radius: 5px;
+  border: 1px solid var(--borders);
+  margin-top: 10px;
+  height: 200px;
+  resize: none;
+}
+
+.profie_ai { 
+  width: 100%;
+  padding-left: 400px;
+  margin-top: 53px;
+  padding-top: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: start;
+  flex-direction: column;
+}
+
+.top_img_main { 
+  background-image: linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url('https://p4.wallpaperbetter.com/wallpaper/567/948/11/guy-sunset-sky-wallpaper-preview.jpg');
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+}
+
+.proi_names { 
+  margin-top:400px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  padding:20px;
+  width: 100%;
+  gap:20px;
+}
+
+.top_img_main img { 
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.top_img_main { 
+  position: relative;
+}
+
+.proi_names label:first-child{ 
+  background: var(--mainbg);
+  padding:10px;
+  width: 50px;
+  border-radius: 5px;
+  position: absolute;
+  top:20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.details { 
+  margin-top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-top: 1px solid var(--borders);
+  flex-direction: column;
+}
+
+.name_part { 
+  width: 100%;
+  max-width: 800px;
+  padding:40px;
+}
+
+.name_part input { 
+  width: 100%;
+  padding:10px;
+  margin-bottom: 10px;
+}
+
+.name_part h4 { 
+ margin-top: 10px;
+}
+
+.name_part textarea{ 
+  width: 100%;
+  padding:10px;
+  margin-bottom: 10px;
+  height: 100px;
+  resize: none;
+}
+
+.itm1 { 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap:10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.u_1 { 
+  width: 100%;
+  padding:10px;
+  border-radius: 10px;
+  border: 1px solid var(--borders);
+}
+
+.u_1 .col {
+  width: 100%;
+  padding:10px;
+ }
+
+ .chat_users { 
+  width: 100%;
+  padding-left: 400px;
+  margin-top: 53px;
+  padding-top: 15px;
+ overflow: hidden;
+  height:100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: start;
+  flex-direction: column;
+ }
+
+ .chat_container{ 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+ }
+
+ .chatheader { 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:5px;
+  margin-top: 10px;
+  border-bottom: 1px solid var(--borders);
+ }
+
+ .last_chat_part { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  font-size: 25px;
+ }
+
+ .last_chat_part div { 
+  padding:10px;
+  cursor: pointer;
+ }
+
+ .chatheader img { 
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--borders);
+ }
+
+ .one_chat_part { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+ }
+
+ .name_ou { 
+  width: 100%;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+ }
+
+ .status{ 
+  font-size: 12px;
+ }
+
+
+ * > a { 
+  color: var(--color);
+  text-decoration: none;
+ }
+
+ .onw_man_tool { 
+  overflow: hidden;
+ }
+
+ .below_cons { 
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  height: 80%;
+ }
+
+ .onw_man_tool { 
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  flex: 1 1 30rem;
+ }
+
+ .chat_usr img { 
+  width: 2rem;
+  height: 2rem;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--borders);
+ }
+
+ .chat_usr { 
+  width: 100%;
+  max-width: 300px;
+  background: var(--mainbg);
+  height: 100vh;
+  overflow-x: hidden;
+  overflow: auto;
+  flex: 1 1 30rem;
+  border-left: 1px solid var(--borders);
+  padding:5px;
+ }
+
+ .chat_ucon { 
+  display: flex;
+  width: 100%;
+ }
+
+ .us_cha1 { 
+  display: flex;
+  align-items: center;
+  gap:10px;
+  padding:10px;
+  background: var(--mainbg);
+  width: 100%;
+  border: 1px solid var(--borders);
+  margin-top: 10px;
+  border-radius: 5px;
+ }
+
+ .chat_form { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  padding:10px;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+ }
+
+ 
+
+ .chat_form form { 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  max-width: 800px;
+  padding:10px;
+  border-top: 1px solid var(--borders);
+ }
+
+ .chat_form input { 
+  width: 100%;
+  padding:6px;
+  border-radius: 60px;
+  border: 2px solid var(--borders);
+ }
+
+ .grabber_co { 
+  top:0;
+  height: 83%;
+  width: 100%;
+  padding:10px;
+  overflow: hidden;
+  position: relative;
+ }
+
+ .chat_one_part { 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding:10px;
+ }
+
+ .chat_main { 
+  width: fit-content;
+  max-width: 65%;
+  background: rgb(0, 123, 255);
+  padding:10px;
+  border-radius: 10px;
   color: white;
+ }
+
+ .chat_main_o { 
+  max-height: 87%;
+  overflow: auto;
+ }
+
+ .chat_main_1 { 
+  width: fit-content;
+  max-width: 65%;
+  background: rgb(255, 0, 136);
+  padding:10px;
+  border-radius: 10px;
+  color: white;
+ }
+
+ .callings { 
+  width: 100%;
+  padding-left: 400px;
+  margin-top: 53px;
+  padding-top: 15px;
+ overflow: hidden;
+  height:100vh;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+  
+ }
+
+ .calling_container { 
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: 100%;
+ }
+
+ .main_video { 
+  width: 100%;
+  position: relative;
+ }
+
+ .mainv { 
+  height: 100%;
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  overflow: auto;
+ }
+
+
+ .small_vid { 
+ width: 100%;
+ }
+
+ .mainv video{ 
+  height: 200vh;
+  width: 100%;
+ }
+
+ .main_video { 
+  width: 100%;
+ }
+
+ .small_vid { 
+  position: absolute;
+  top:30px;
+  right: 20px;
+  width: 100%;
+ }
+
+ .small_vid video{ 
+  width: 200px;
+ }
+
+ .main_video video::-webkit-media-controls {
+  display: none;
 }
 
-.App-link {
-  color: #61dafb;
+.call_controls { 
+  position: absolute;
+  top:20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  width: 100%;
+  z-index: 500000;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.call_controls div { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+}
+
+.vid_cont video { 
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+  object-position: center;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.vid_cont { 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+  position: relative;
+}
+
+#userprof { 
+  position: absolute;
+  top:140px;
+  height: 150px;
+  width: 150px;
+  border-radius: 20px;
+  right: -50px;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+}
+
+.vid_cont video::-webkit-media-controls {
+  display: none;
+}
+
+@media screen and (max-width: 1000px) {
+
+  .callings { 
+    padding: 0;
   }
-  to {
-    transform: rotate(360deg);
+
+  .left_mt { 
+    left: -1000%;
+  }
+  .chat_users { 
+    padding: 0;
+  }
+  .home_page { 
+    padding: 0;
+  }
+  .previews_m { 
+    padding: 0;
+  }
+
+  .previews_m { 
+    margin: 0;
+    padding-top: 100px;
+    overflow: auto;
+    align-items: flex-start;
+    overflow: auto;
+  }
+
+  .profie_ai { 
+    padding: 0;
+  }
+
+  .proi_names { 
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .chat_usr { 
+    position: fixed;
+    width: 100%;
+    max-width: 100%;
+    right: -200%;
+  }
+
+ 
+ 
+}
+
+
+
+
+@media screen and (max-width: 600px) {
+
+  .grabber_co { 
+    height: 70%;
+  }
+
+  .chat_main { 
+    max-width: 80%;
+   }
+
+   .chat_main_1 { 
+    max-width: 80%;
+   }
+ 
+  .chat_form input:focus ~ .chat_users{ 
+    width: 100%;
+    padding-left: 400px;
+    margin-top: 53px;
+    padding-top: 15px;
+   overflow: hidden;
+    height:20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: start;
+    flex-direction: column;
+  }
+
+  .name_ou { 
+    max-width: 150px;
+  }
+
+  .name_part { 
+    padding: 10px;
+  }
+
+  .tools1 span { 
+    display: none;
+  }
+
+  .hero_text .h1{ 
+    font-size: 50px;
+  }
+
+  .top_img_main { 
+    height: 300px;
+  }
+
+  .proi_names { 
+    margin-top: 200px;
+  }
+}
+
+
+@media screen and (max-width: 320px) {
+  .tools1 span { 
+    display: none;
+  }
+
+  .hero_text .h1{ 
+    font-size: 50px;
+  }
+  .logon{ 
+    display: none;
+  }
+}
+
+@media print { 
+  body { 
+    display: none;
+  }
+}
+
+@media (prefers-color-scheme: dark){ 
+  :root{ 
+    color-scheme: dark;
+    --mainbg: #000;
+    --color: #fff;
+    --borders: #eaeaea3b;
   }
 }
