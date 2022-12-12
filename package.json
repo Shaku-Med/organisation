@@ -16,6 +16,7 @@
     "react-helmet": "^6.1.0",
     "react-linkify": "^1.0.0-alpha",
     "react-router-dom": "^6.4.5",
+    "react-script": "^2.0.5",
     "react-scripts": "5.0.1",
     "react-web-share": "^2.0.2",
     "socket.io-client": "^4.5.4",

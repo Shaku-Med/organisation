@@ -54,9 +54,6 @@ function Signup() {
 
         let emailregix = /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/
 
-        let passregix = /^(?=.*[0-9])(?=.*[!@?#$%^&*])[a-zA-Z0-9!@?#$%^&*]{6,16}$/;
-
-
         if(name === ""){ 
             alert("Enter your username")
         }
@@ -97,12 +94,8 @@ function Signup() {
         alert("Error: enter your password.")
        
     }
-    else if(pass.length < 10){ 
+    else if(pass.length < 8){ 
         alert("Error: Your password length must be 10 character, letters, numbers and symbols")
-       
-    }
-    else if(!pass.match(passregix)){ 
-        alert("Error: your password doesn't go with our requirement.")
        
     }
     else if(month === ""){ 
@@ -330,6 +323,7 @@ function Signup() {
             <div className="col">
                 <label htmlFor="">Upload your profile picture</label>
                 <input
+                accept='image/*'
                  onChange={e => { 
                     setporofilepic(e.target.files[0])
                 }}
