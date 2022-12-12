@@ -280,11 +280,7 @@ function Home() {
                           >
                             View profile
                           </button>
-                          <button  onClick={e => { 
-                window.open("../#/Chat/" + val.c_usr, "_self")
-            }} className="btn btn-outline-primary">
-                            Message
-                          </button>
+         
                         </div>
                       </div>
                     </div>
