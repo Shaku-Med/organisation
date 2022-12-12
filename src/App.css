@@ -775,7 +775,340 @@ html {
   display: none;
 }
 
+/* Preloader */
+
+.payload { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  transition: .5s ease-in-out;
+  opacity: 1;
+  animation: ani 1s ease-in-out alternate infinite;
+}
+
+@keyframes ani {
+  0% { 
+    opacity: .1;
+  }
+}
+
+
+.spinner {
+  position: relative;
+  width: 16px;
+  height: 16px;
+ }
+ 
+ .spinner div {
+  width: 100%;
+  height: 100%;
+  background-color: #004dff;
+  border-radius: 50%;
+  animation: spinner-4t3wzl 1.25s infinite backwards;
+ }
+ 
+ .spinner div:nth-child(1) {
+  animation-delay: 0.15s;
+  background-color: rgba(0,77,255,0.9);
+ }
+ 
+ .spinner div:nth-child(2) {
+  animation-delay: 0.3s;
+  background-color: rgba(0,77,255,0.8);
+ }
+ 
+ .spinner div:nth-child(3) {
+  animation-delay: 0.45s;
+  background-color: rgba(0,77,255,0.7);
+ }
+ 
+ .spinner div:nth-child(4) {
+  animation-delay: 0.6s;
+  background-color: rgba(0,77,255,0.6);
+ }
+ 
+ .spinner div:nth-child(5) {
+  animation-delay: 0.75s;
+  background-color: rgba(0,77,255,0.5);
+ }
+ 
+ @keyframes spinner-4t3wzl {
+  0% {
+   transform: rotate(0deg) translateY(-200%);
+  }
+ 
+  60%, 100% {
+   transform: rotate(360deg) translateY(-200%);
+  }
+ }
+
+
+
+/* End of preload */
+
+
+.lost_vid { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  position: relative;
+}
+
+.lost_vid video{ 
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  transform: scale(1.1);
+}
+
+.lost_vid video::-webkit-media-controls {
+  display: none;
+}
+
+.lost_vid h1 { 
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+}
+
+.login_container { 
+  position: absolute;
+  height: 100%;
+  top:0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  padding:10px;
+}
+
+.login_container form { 
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  flex-direction: column;
+  padding:20px;
+  max-width: 500px;
+}
+
+.login_container input{ 
+  width: 100%;
+  padding:10px;
+  border: none;
+  background: black;
+  border-radius: 5px;
+}
+
+.login_container { 
+  flex-direction: column;
+  color: white;
+}
+
+.login_container img { 
+  width: 5rem;
+}
+
+.log_o { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.log_o img { 
+  position: absolute;
+  top:20px;
+  left: 20px;
+}
+
+.form_conta { 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup_form { 
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap:10px;
+  overflow: hidden;
+  height: 100vh;
+  flex-wrap: wrap;
+}
+
+.signup_form img { 
+  width: 5rem;
+  pointer-events: none;
+}
+
+.signup_form input{ 
+  width: 100%;
+  padding:10px;
+  border: 1px solid  var(--borders);
+  background: black;
+}
+
+.signup_form select{ 
+  width: 100%;
+  padding:10px;
+  border-radius: 5px;
+  color: white;
+  background: black;
+  border: 1px solid var(--borders);
+}
+
+.signup_form textarea{ 
+  width: 100%;
+  padding:10px;
+  border-radius: 5px;
+  color: white;
+  background: black;
+  border: 1px solid var(--borders);
+  resize: none;
+  height: 100px;
+}
+
+.signup_form form { 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  flex-direction: column;
+}
+
+.signup_form form .col { 
+  width: 100%;
+}
+
+.first_part { 
+  width: 100%;
+  flex: 1 1 30rem;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  flex-direction: column;
+}
+
+.form_co_s { 
+  width: 100%;
+  flex: 1 1 30rem;
+  height: 100vh;
+  padding:10px;
+  overflow: auto;
+}
+
+.col input { 
+  margin-top: 10px;
+}
+.cols { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+}
+
+.cols input { 
+  margin-top: 0px;
+}
+
+.signup_form { 
+  position: absolute;
+}
+
+.first_part { 
+  overflow: hidden;
+}
+
+.first_part video{ 
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.first_part video::-webkit-media-controls {
+  display: none;
+}
+
+.on_me { 
+  position: absolute;
+  text-align: center;
+}
+
+.com { 
+  height: 5vh;
+}
+
+.main_alt { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  height: 100vh;
+}
+
+.main_alt i { 
+  font-size: 50px;
+  font-weight: bold;
+}
+
+.account_v_msg div { 
+  width: 100%;
+  border: 1px solid var(--borders);
+  padding:10px;
+  border-radius: 10px;
+}
+
+.loading_ani { 
+  position: fixed;
+  top:0;
+  left: 0;
+  width: 100%;
+  z-index: 10000000000000;
+  height: 100%;
+  background: var(--mainbg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:10px;
+}
+
 @media screen and (max-width: 1000px) {
+
+ 
+  .form_co_s { 
+    overflow: auto;
+    padding-bottom: 15vh;
+    height: 100%;
+  }
+
+
+  .first_part { 
+    height: 200px;
+  }
 
   .callings { 
     padding: 0;
@@ -818,6 +1151,9 @@ html {
     right: -200%;
   }
 
+  .signup_form { 
+    overflow: auto;
+  }
  
  
 }
@@ -826,6 +1162,19 @@ html {
 
 
 @media screen and (max-width: 600px) {
+
+  .com { 
+    height: 30vh;
+  }
+
+  .signup_form{ 
+    overflow: hidden;
+  }
+
+  .form_co_s { 
+    overflow: auto;
+    margin-bottom: 20vh;
+  }
 
   .grabber_co { 
     height: 70%;
