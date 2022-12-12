@@ -20,7 +20,7 @@ function Preview() {
         let da = new Date()
         let date = da.getDate()
 
-          axios.post("https://orgbackend.vercel.app/admin/post", { 
+          axios.post("https://testbackend.mohamedbrima.repl.co/admin/post", { 
             filen: fil
           }, { 
             headers: { 
@@ -31,7 +31,7 @@ function Preview() {
 
            setTimeout(() => {
             axios
-            .post("https://orgbackend.vercel.app/users/admin", {
+            .post("https://testbackend.mohamedbrima.repl.co/users/admin", {
               c_usr: Cookies.get("c_usr"),
               xs: Cookies.get("xs"),
               fid: fid,
