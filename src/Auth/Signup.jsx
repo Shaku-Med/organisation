@@ -238,9 +238,7 @@ function Signup() {
                 </Link>
             </div>
 
-   <div className="shadow text-center p-4 text-primary">
-    {mes}
-   </div>
+   
         <form onSubmit={handlesubmit} action="">
             <div className="col">
             <input onChange={e => { 
@@ -337,6 +335,11 @@ function Signup() {
                 }}
                  type="file" id="adifndoifndi" />
             </div>
+
+            <div className="shadow text-center p-4 text-primary">
+    {mes}
+   </div>
+
             <div className="col">
                 <button  id='btns' className="btn btn-outline-danger w-100">Sign up</button>
             </div>
