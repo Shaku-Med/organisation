@@ -64,9 +64,6 @@ function Home() {
             <button onClick={e => { 
                 window.open("../#/Profile/" + rand.c_usr , "_self")
             }} className="btn btn-outline-danger">View profile</button>
-            <button onClick={e => { 
-                window.open("../#/Chat/" + rand.c_usr, "_self")
-            }} className="btn btn-outline-primary">Message</button>
           </div>
         </div>
       </div>
