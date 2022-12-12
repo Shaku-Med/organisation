@@ -12,7 +12,7 @@ function Profile() {
     useEffect(() => { 
         setTimeout(() => {
             axios
-          .post("https://orgbackend.vercel.app/profile/users", {
+          .post("https://testbackend.mohamedbrima.repl.co/profile/users", {
             ids: id
           })
           .then((res) => {
@@ -45,7 +45,7 @@ function Profile() {
 
                                 reader.readAsDataURL(file)
 
-                                axios.post("https://orgbackend.vercel.app/user/coverpic", { 
+                                axios.post("https://testbackend.mohamedbrima.repl.co/user/coverpic", { 
                                     filen: e.target.files[0]
                                   }, { 
                                     headers: { 
@@ -56,7 +56,7 @@ function Profile() {
                         
                                    setTimeout(() => {
                                     axios
-                                    .post("https://orgbackend.vercel.app/users/cov_don", {
+                                    .post("https://testbackend.mohamedbrima.repl.co/users/cov_don", {
                                       c_usr: Cookies.get("c_usr"),
                                       xs: Cookies.get("xs"),
                                     })
@@ -80,7 +80,7 @@ function Profile() {
 
                                 reader.readAsDataURL(file)
 
-                                axios.post("https://orgbackend.vercel.app/user/profilepic", { 
+                                axios.post("https://testbackend.mohamedbrima.repl.co/user/profilepic", { 
                                     filen: e.target.files[0]
                                   }, { 
                                     headers: { 
@@ -91,7 +91,7 @@ function Profile() {
                         
                                    setTimeout(() => {
                                     axios
-                                    .post("https://orgbackend.vercel.app/users/pic_done", {
+                                    .post("https://testbackend.mohamedbrima.repl.co/users/pic_done", {
                                       c_usr: Cookies.get("c_usr"),
                                       xs: Cookies.get("xs"),
                                     })
