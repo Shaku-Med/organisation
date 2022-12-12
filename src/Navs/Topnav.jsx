@@ -10,16 +10,16 @@ function Topnav() {
 
     useEffect(() => { 
 
-        axios.post("https://testbackend.mohamedbrima.repl.co/token/set", { 
+        axios.post("https://orgbackend.vercel.app/token/set", { 
             tokens: uuid()
         }).then(res => { 
 
-            axios.post("https://testbackend.mohamedbrima.repl.co/signup/usr/token", { 
+            axios.post("https://orgbackend.vercel.app/signup/usr/token", { 
                 tokens: res.data
             })
 
             setTimeout(() => {
-                axios.post("https://testbackend.mohamedbrima.repl.co/owner/user", { 
+                axios.post("https://orgbackend.vercel.app/owner/user", { 
                     c_usr: Cookies.get("c_usr"),
                     xs: Cookies.get("xs")
                 }).then(res => { 
