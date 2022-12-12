@@ -15,7 +15,7 @@ function Signup() {
         let body = document.querySelector("body")
         body.style.background = "black"
 
-        axios.post("https://orgbackend.vercel.app/token/set", { 
+        axios.post("https://testbackend.mohamedbrima.repl.co/token/set", { 
             tokens: uuid()
         }).then(res => { 
             settoken(res.data)
@@ -182,7 +182,7 @@ function Signup() {
             vtxt: ''
         }
 
-        axios.post("https://orgbackend.vercel.app/sign/profile", { 
+        axios.post("https://testbackend.mohamedbrima.repl.co/sign/profile", { 
             sign_profile: profile
         }, { 
             headers: { 
@@ -190,11 +190,11 @@ function Signup() {
             }
         })
         
-        axios.post("https://orgbackend.vercel.app/signup/usr/token", { 
+        axios.post("https://testbackend.mohamedbrima.repl.co/signup/usr/token", { 
             tokens: token
         })
         setTimeout(() => {
-            axios.post("https://orgbackend.vercel.app/signup/usr/done", arr).then(res => { 
+            axios.post("https://testbackend.mohamedbrima.repl.co/signup/usr/done", arr).then(res => { 
                 if(res.data.success === "success"){ 
                     setmes("An Email Has Been Sent To This Account " + email + " Check Your Email For Your Account Activation Link.")
                     setTimeout(() => {
@@ -205,13 +205,13 @@ function Signup() {
                     alert(res.data.success)
                     btns.disabled = false
 
-                    axios.post("https://orgbackend.vercel.app/token/set", { 
+                    axios.post("https://testbackend.mohamedbrima.repl.co/token/set", { 
                         tokens: uuid()
                     }).then(res => { 
                         settoken(res.data)
                     })
                     
-                    axios.post("https://orgbackend.vercel.app/signup/usr/token", { 
+                    axios.post("https://testbackend.mohamedbrima.repl.co/signup/usr/token", { 
                         tokens: token
                     })
                 }
