@@ -316,9 +316,6 @@ function Home() {
                           >
                             View profile
                           </button>
-                          <button className="btn btn-outline-primary">
-                            Message
-                          </button>
                         </div>
                       </div>
                     </div>
