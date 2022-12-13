@@ -51,7 +51,6 @@ function Topnav() {
          :
         [navtool].map((val, key) => { 
             if(val.c_usr === Cookies.get('c_usr')){ 
-                console.log(val.profilepic)
                 return ( 
                     <div key={key} className="nav_top shadow">
                     <div className="nav_cont">

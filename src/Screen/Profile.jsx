@@ -14,7 +14,7 @@ function Profile() {
     useEffect(() => { 
         setTimeout(() => {
             axios
-          .post("https://testbackend.mohamedbrima.repl.co/profile/users", {
+          .post("https://orgbackend.vercel.app/profile/users", {
             ids: id
           })
           .then((res) => {
@@ -26,7 +26,9 @@ function Profile() {
           ownerid: id
         }).then(res => { 
           setnewmes(res.data)
+          console.log(datas)
         })
+
 
     }, [id])
 
