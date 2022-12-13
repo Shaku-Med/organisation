@@ -76,6 +76,20 @@ function Home() {
         </div>
       </div>
 
+      <div className="new_fet">
+        <div className="mid_man shadow">
+          <div className="ala text-center">
+            😊
+          </div>
+          <div className="new_t text-center">
+            A new feature has been added to this website. Can someone guess? Yes it's a realtime fast chatting application. This means, You can chat with any one who is signed in to this app. And the best this is, It's free 😊
+          </div>
+          <div onClick={e => { 
+            window.open("../#/Chat", "_self")
+          }} className=" tryit btn btn-outline text-center w-100 mt-3">Try it</div>
+        </div>
+      </div>
+
       {
       
       maint.map((val, key) => { 

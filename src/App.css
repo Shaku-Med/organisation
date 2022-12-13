@@ -12,6 +12,8 @@
   scroll-behavior: smooth;
 }
 
+
+
 .success_ms { 
   position: fixed;
   top:0;
@@ -1204,6 +1206,213 @@ html {
   max-width: 500px;
 }
 
+.new_fet { 
+  padding:10px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mid_man { 
+  width: 100%;
+  max-width: 600px;
+  background: var(--mainbg);
+  border-radius: 10px;
+  border: 1px solid var(--borders);
+}
+
+.ala { 
+  font-size: 40px;
+}
+
+.tryit { 
+  border-top: 1px solid var(--borders);
+  border-radius: 0;
+  margin-top: 10px;
+  padding:10px;
+}
+
+.chat_containers { 
+  padding-top:10px;
+}
+
+.chat_containers img { 
+  width: 3rem;
+  height: 3rem;
+  object-fit: cover;
+  object-position: 0 0;
+  border-radius: 50%;
+  border: 1px solid var(--borders);
+  pointer-events: none;
+}
+
+.chat_head { 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap:10px;
+  font-size: 20px;
+  padding: 10px;
+  background: var(--mainbg);
+  z-index: 50000;
+  border-bottom: 1px solid var(--borders);
+}
+
+.chat_mem_o { 
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap:10px;
+  width: 100%;
+  max-width: 300px;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.chat_mem_o img { 
+  scroll-snap-align: start;
+}
+
+.chat_mem_o::-webkit-scrollbar{ 
+  display: none;
+}
+
+.Hellow_text { 
+  padding: 10px;
+  width: 100%;
+  position: fixed;
+  bottom:0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--borders);
+  background: var(--mainbg);
+  box-shadow: 0 0 5px #00000067;
+  left: 0;
+  z-index: 300000000;
+}
+
+.Hellow_text input { 
+  width: 100%;
+  padding:5px;
+  border-radius: 60px;
+  border: 1px solid var(--borders);
+  max-width: 70%;
+  background: black;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.mes_cent { 
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mes_cent form { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.mes_cent button{ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+}
+
+.chat_body { 
+  width: 100%;
+  position: relative;
+  height: 100%;
+  position: absolute;
+  padding:10px;
+  background-position: 0 0;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+  overflow: auto;
+}
+
+.chat_r { 
+  padding:10px;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: end;
+}
+
+.c_1{ 
+  width: fit-content;
+  max-width: 60%;
+  color: white;
+  padding:10px;
+  border-radius: 10px;
+}
+
+.c_1 a { 
+  color:white;
+  font-weight: bold;
+}
+
+.c_1{ 
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.na { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+  margin-bottom: 10px;
+}
+
+.nas { 
+  display: flex;
+  align-items:center;
+  justify-content: start;
+  gap:10px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.cMes { 
+  background: #206ce6;
+  padding:10px;
+  border-radius: 10px;
+}
+
+.chat_e .cMes{ 
+  background: #a52a2a;
+  padding:10px;
+  border-radius: 10px;
+}
+
+.homie { 
+  z-index: 400000000;
+  background: var(--mainbg);
+  position: fixed;
+  top:0;
+  width: 100%;
+  left: 0;
+  height: 100%;
+  padding-top: 50px;
+}
+
+.nam { 
+  text-shadow: 2px 2px 10px var(--mainbg);
+}
+
 @media screen and (max-width: 1000px) {
 
  
@@ -1271,6 +1480,10 @@ html {
 
 @media screen and (max-width: 600px) {
 
+  .c_1 { 
+    max-width: 80%;
+  }
+
   .leave_a_mes { 
     padding:10px;
   }
@@ -1336,6 +1549,16 @@ html {
   .proi_names { 
     margin-top: 200px;
   }
+
+  .chat_mem_o { 
+    max-width: 130px;
+  }
+
+  .chat_mem_o img { 
+    width: 2rem;
+    height: 2rem;
+  }
+
 }
 
 
