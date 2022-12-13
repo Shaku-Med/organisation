@@ -1331,7 +1331,7 @@ html {
 .chat_body { 
   width: 100%;
   position: relative;
-  height: 100%;
+  height: 78%;
   position: absolute;
   padding:10px;
   background-position: 0 0;

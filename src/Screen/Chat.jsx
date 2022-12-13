@@ -36,6 +36,8 @@ function Chat() {
             sendersid: Cookies.get("c_usr")
         }).then(res => { 
             setmainm(res.data)
+            let chat_body = document.querySelector(".chat_body")
+            chat_body.scrollTo(0, chat_body.scrollHeight)
         })
 
         let chat_body = document.querySelector(".chat_body")
@@ -137,7 +139,7 @@ function Chat() {
                         }
                        })
                     }
-            <h1 style={{height: '30vh'}}></h1>
+            <h1 style={{height: '5vh'}}></h1>
             </div>
         </div>
         <div className="Hellow_text">
