@@ -183,10 +183,10 @@ function Profile() {
 
               <div className="leave_a_mes">
                 <div className="message_texts">
-                  { 
+                { 
                     newmes.map((v, k) => { 
                       if(v.ownerid === id){ 
-                        if(v.sendersid === v.c_usr){ 
+                        if(v.c_usr === v.sendersid){ 
                           if(v.c_usr === Cookies.get("c_usr")){ 
                             return ( 
                               <div key={k} className="chat_one">
@@ -215,7 +215,7 @@ function Profile() {
                                 }} src={v.profilepic} alt="" />
                                 <div className="nams">
                                   <Link to={"../Profile/" + v.c_usr}>
-                                    {v.names}
+                                    {v.states === 'Admin' ? v.names + ' (Admin)' : v.names}
                                   </Link>
                                 </div>
                               </div>
@@ -355,7 +355,7 @@ function Profile() {
                                 }} src={v.profilepic} alt="" />
                                 <div className="nams">
                                   <Link to={"../Profile/" + v.c_usr}>
-                                    {v.names}
+                                  {v.states === 'Admin' ? v.names + ' (Admin)' : v.names}
                                   </Link>
                                 </div>
                               </div>
