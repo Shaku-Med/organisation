@@ -143,7 +143,7 @@ function Home() {
                             }
                           })
                         }
-                      }} className="impo_txt btn btn-outline-success">
+                      }} className="impo_txt btn btn-outline-success mt-2">
                         Delete
                       </div>
                     </div>
