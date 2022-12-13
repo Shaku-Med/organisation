@@ -117,6 +117,9 @@ function Home() {
                             vidid: val.vidid
                           }).then(res => { 
                             if(res.data === "success"){ 
+
+                              window.location.reload()
+
                               setTimeout(() => {
                                 axios
                               .post("https://orgbackend.vercel.app/users/all", {
@@ -142,7 +145,6 @@ function Home() {
                               });
                             }, 1050);
 
-                            window.location.reload()
                         
                             }
                           })
