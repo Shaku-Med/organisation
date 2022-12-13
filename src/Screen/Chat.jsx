@@ -37,13 +37,13 @@ function Chat() {
         }).then(res => { 
             setmainm(res.data)
             let chat_body = document.querySelector(".chat_body")
-            chat_body.scrollTo(0, chat_body.scrollHeight)
+            chat_body.scrollTop = chat_body.scrollHeight;
         })
 
         let chat_body = document.querySelector(".chat_body")
 
         socket.on("chat_meses", data => { 
-            chat_body.scrollTo(0, chat_body.scrollHeight)
+            chat_body.scrollTop = chat_body.scrollHeight;
             setmainm(data)
         })
 
