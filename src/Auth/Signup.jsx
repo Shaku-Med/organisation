@@ -194,7 +194,7 @@ function Signup() {
                     success_ms.classList.add("animenow")
                     setTimeout(() => {
                         navigate("../")
-                    }, 10000);
+                    }, 80000);
                 }
                 else { 
                     alert(res.data.success)

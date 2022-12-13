@@ -14,6 +14,9 @@ function Home() {
 
   const [maint, setmaint] = useState([])
 
+
+  const [exptime, setexptime] = useState([])
+
   useEffect(() => {
     setTimeout(() => {
         axios
@@ -49,6 +52,11 @@ function Home() {
       });
     });
 
+    let daa = new Date(),
+    dase = daa.getDate()
+
+    setexptime(dase)
+
   }, []);
 
   return (
@@ -72,7 +80,113 @@ function Home() {
       
       maint.map((val, key) => { 
             if(val.adminid === val.c_usr){ 
-                return ( 
+              if(val.adminid === Cookies.get("c_usr")){ 
+                if(exptime !== val.enddate){ 
+                  return ( 
+                    <div key={key} className="groups_mem">
+                    <div className="alert_mess shadow">
+                      <div className="h4">
+                      <img onError={e => { 
+                                        e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
+                                    }} src={val.profilepic} alt=""  style={{pointerEvents: 'none'}}/>
+                        <div className="ts">{val.c_usr === Cookies.get("c_usr") ? val.names : "From Admin"}</div>
+                      </div>
+                      <div className="video_play_con">
+                        <video
+                          id={val.vidid}
+                          playsInline
+                          controls
+                          controlsList="nodownload"
+                          style={{objectFit: 'contain'}}
+                          src={val.filetype + "#t=1"}
+                        ></video>
+                      </div>
+                      <div className="impo_txt">
+                        <Linkify>
+                          {
+                            val.file_desc
+                          }
+                        </Linkify>
+                      </div>
+
+                      <div onClick={e => { 
+                        if(window.confirm() === true){ 
+                          axios.post("https://orgbackend.vercel.app/remove/data", { 
+                            vidid: val.vidid
+                          }).then(res => { 
+                            if(res.data === "success"){ 
+                              setTimeout(() => {
+                                axios
+                              .post("https://orgbackend.vercel.app/users/all", {
+                                c_usr: Cookies.get("c_usr"),
+                                xs: Cookies.get("xs"),
+                              })
+                              .then((res) => {
+                                setfriends(res.data);
+                                let ars_no = Math.floor(Math.random() * res.data.length)
+                                setrand(res.data[ars_no])
+                              });
+                            }, 1000);
+                        
+                        
+                            setTimeout(() => {
+                                axios
+                              .post("https://orgbackend.vercel.app/video/admin", {
+                                c_usr: Cookies.get("c_usr"),
+                                xs: Cookies.get("xs"),
+                              })
+                              .then((res) => {
+                                setmaint(res.data)
+                              });
+                            }, 1050);
+                        
+                            }
+                          })
+                        }
+                      }} className="impo_txt btn btn-outline-success">
+                        Delete
+                      </div>
+                    </div>
+                  </div>
+                )
+                 }
+                 else { 
+                  axios.post("https://orgbackend.vercel.app/remove/data", { 
+                    vidid: val.vidid
+                  }).then(res => { 
+                    if(res.data === "success"){ 
+                      setTimeout(() => {
+                        axios
+                      .post("https://orgbackend.vercel.app/users/all", {
+                        c_usr: Cookies.get("c_usr"),
+                        xs: Cookies.get("xs"),
+                      })
+                      .then((res) => {
+                        setfriends(res.data);
+                        let ars_no = Math.floor(Math.random() * res.data.length)
+                        setrand(res.data[ars_no])
+                      });
+                    }, 1000);
+                
+                
+                    setTimeout(() => {
+                        axios
+                      .post("https://orgbackend.vercel.app/video/admin", {
+                        c_usr: Cookies.get("c_usr"),
+                        xs: Cookies.get("xs"),
+                      })
+                      .then((res) => {
+                        setmaint(res.data)
+                      });
+                    }, 1050);
+                
+                    }
+                  })
+                 }
+              }
+              else { 
+                if(exptime !== val.enddate){ 
+                  return ( 
                     <div key={key} className="groups_mem">
                     <div className="alert_mess shadow">
                       <div className="h4">
@@ -101,6 +215,41 @@ function Home() {
                     </div>
                   </div>
                 )
+                 }
+                 else { 
+                  axios.post("https://orgbackend.vercel.app/remove/data", { 
+                    vidid: val.vidid
+                  }).then(res => { 
+                    if(res.data === "success"){ 
+                      setTimeout(() => {
+                        axios
+                      .post("https://orgbackend.vercel.app/users/all", {
+                        c_usr: Cookies.get("c_usr"),
+                        xs: Cookies.get("xs"),
+                      })
+                      .then((res) => {
+                        setfriends(res.data);
+                        let ars_no = Math.floor(Math.random() * res.data.length)
+                        setrand(res.data[ars_no])
+                      });
+                    }, 1000);
+                
+                
+                    setTimeout(() => {
+                        axios
+                      .post("https://orgbackend.vercel.app/video/admin", {
+                        c_usr: Cookies.get("c_usr"),
+                        xs: Cookies.get("xs"),
+                      })
+                      .then((res) => {
+                        setmaint(res.data)
+                      });
+                    }, 1050);
+                
+                    }
+                  })
+                 }
+              }
             }
       })
          
