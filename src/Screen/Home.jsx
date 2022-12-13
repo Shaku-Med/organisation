@@ -90,7 +90,9 @@ function Home() {
                                         e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
                                     }} src={val.profilepic} alt=""  style={{pointerEvents: 'none'}}/>
                         <div className="ts">{val.c_usr === Cookies.get("c_usr") ? val.names : "From Admin"}</div>
+  
                       </div>
+                      <small>This item will be deleted automatically after {Math.abs(exptime - val.enddate)} {Math.abs(exptime - val.enddate) < 2 ? "day" : "days"}</small>
                       <div className="video_play_con">
                         <video
                           id={val.vidid}
@@ -139,6 +141,8 @@ function Home() {
                                 setmaint(res.data)
                               });
                             }, 1050);
+
+                            window.location.reload()
                         
                             }
                           })
@@ -195,6 +199,7 @@ function Home() {
                                     }} src={val.profilepic} alt=""  style={{pointerEvents: 'none'}}/>
                         <div className="ts">{val.c_usr === Cookies.get("c_usr") ? val.names : "From Admin"}</div>
                       </div>
+                        <small>This item will be deleted automatically after {Math.abs(exptime - val.enddate)} {Math.abs(exptime - val.enddate) < 2 ? "day" : "days"}</small>
                       <div className="video_play_con">
                         <video
                           id={val.vidid}
