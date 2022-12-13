@@ -116,10 +116,7 @@ function Home() {
                           axios.post("https://orgbackend.vercel.app/remove/data", { 
                             vidid: val.vidid
                           }).then(res => { 
-                            if(res.data === "success"){ 
-
-                              window.location.reload()
-
+                            if(res.data.success === "success"){ 
                               setTimeout(() => {
                                 axios
                               .post("https://orgbackend.vercel.app/users/all", {
