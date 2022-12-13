@@ -16,6 +16,23 @@
   display: none;
 }
 
+.name_part{ 
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap:10px;
+}
+
+.name_part .names_main{ 
+  width: 100%;
+  user-select:all;
+  -webkit-user-select: all;
+}
+
+.name_part .names_main::selection{ 
+  background: red;
+  color:white;
+}
+
 body{ 
   margin: 0;
   padding: 0;

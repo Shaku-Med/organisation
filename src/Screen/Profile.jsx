@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react'
+import ReactLinkify from 'react-linkify';
 import { useParams } from 'react-router-dom';
 
 function Profile() {
@@ -106,7 +107,7 @@ function Profile() {
                         <label htmlFor="img_part">
                         <img onError={e => { 
                                     e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                                }} src={val.profilepic} alt="" id='file_main'/>
+                                }} src={val.profilepic} alt="" id='file_main' style={{cursor: 'pointer', PointerEvent: 'none'}}/>
                         </label>
                         <div className="h1">
                           <div className="name_main mb-3">
@@ -129,23 +130,35 @@ function Profile() {
                     <div className="name_part">
                         <div className="col">
                             <h4>Name</h4>
-                            <input disabled placeholder={val.names} type="text" name="" id="" />
+                            <div className="names_main border p-2 bg-dark rounded text-white">
+                              {val.names}
+                            </div>
                         </div>
                         <div className="col">
                             <h4>Email</h4>
-                            <input disabled placeholder={val.cemail} type="text" name="" id="" />
+                            <div className="names_main border p-2 bg-dark rounded text-white">
+                              {val.cemail}
+                            </div>
                         </div>
                         <div className="col">
                             <h4>Education</h4>
-                            <input disabled  placeholder={val.edu} type="text" name="" id="" />
+                            <div className="names_main border p-2 bg-dark rounded text-white">
+                              {val.edu}
+                            </div>
                         </div>
                         <div className="col">
                             <h4>Sex</h4>
-                            <input disabled placeholder={val.gend} type="text" name="" id="" />
+                            <div className="names_main border p-2 bg-dark rounded text-white">
+                              {val.gend}
+                            </div>
                         </div>
                         <div className="col">
                             <h4>About You</h4>
-                             <textarea disabled placeholder={val.about} name="" id=""></textarea>
+                            <div className="names_main border p-2 bg-dark rounded text-white">
+                            <ReactLinkify> 
+                              {val.about}
+                              </ReactLinkify>
+                            </div>
                         </div>
                     </div>
                     <div className="h1" style={{height: '20vh'}}></div>
@@ -170,25 +183,37 @@ function Profile() {
                 </div>
                 <div className="details">
                     <div className="name_part">
-                        <div className="col">
+                    <div className="col">
                             <h4>Name</h4>
-                            <input disabled placeholder={val.names} type="text" name="" id="" />
+                            <div className="names_main border p-2 bg-dark rounded text-white">
+                              {val.names}
+                            </div>
                         </div>
                         <div className="col">
-                            <h4>Email</h4>
-                            <input disabled placeholder={val.cemail} type="text" name="" id="" />
+                            <h4>Contact Email</h4>
+                            <div className="names_main border p-2 bg-dark rounded text-white">
+                              {val.cemail}
+                            </div>
                         </div>
                         <div className="col">
                             <h4>Education</h4>
-                            <input disabled  placeholder={val.edu} type="text" name="" id="" />
+                            <div className="names_main border p-2 bg-dark rounded text-white">
+                              {val.edu}
+                            </div>
                         </div>
                         <div className="col">
                             <h4>Sex</h4>
-                            <input disabled placeholder={val.gend} type="text" name="" id="" />
+                            <div className="names_main border p-2 bg-dark rounded text-white">
+                              {val.gend}
+                            </div>
                         </div>
                         <div className="col">
                             <h4>About You</h4>
-                             <textarea disabled placeholder={val.about} name="" id=""></textarea>
+                            <div className="names_main border p-2 bg-dark rounded text-white">
+                              <ReactLinkify> 
+                              {val.about}
+                              </ReactLinkify>
+                            </div>
                         </div>
                     </div>
                     <div className="h1" style={{height: '20vh'}}></div>
