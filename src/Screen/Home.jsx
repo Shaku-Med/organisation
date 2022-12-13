@@ -110,7 +110,7 @@ function Home() {
                       </div>
 
                       <div onClick={e => { 
-                        if(window.confirm() === true){ 
+                        if(window.confirm("Woa admin. You're about to delete this item. Do you wish to do so?") === true){ 
                           axios.post("https://orgbackend.vercel.app/remove/data", { 
                             vidid: val.vidid
                           }).then(res => { 
