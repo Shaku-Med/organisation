@@ -75,7 +75,7 @@ function Login() {
                         localStorage.setItem("c_usr", res.data.c_usr)
                         setTimeout(() => {
                             window.location.reload()
-                    }, 10);
+                    }, 1000);
                 }
                 else { 
                     axios.post("https://orgbackend.vercel.app/token/set", { 
