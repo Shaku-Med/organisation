@@ -10,34 +10,24 @@ function Topnav() {
 
     useEffect(() => { 
 
-        axios.post("https://orgbackend.vercel.app/token/set", { 
-            tokens: uuid()
-        }).then(res => { 
-
-            axios.post("https://orgbackend.vercel.app/signup/usr/token", { 
-                tokens: res.data
+        setTimeout(() => {
+            axios.post("https://orgbackend.vercel.app/owner/user", { 
+                c_usr: Cookies.get("c_usr"),
+                xs: Cookies.get("xs")
+            }).then(res => { 
+               if(res.data === "Erros"){ 
+                Cookies.remove("c_usr")
+                Cookies.remove("xs")
+                localStorage.clear()
+               }
+               else { 
+                   res.data.map(val => { 
+                     setnavtool(val)
+                 })
+               }
             })
+        }, 1000);
 
-            setTimeout(() => {
-                axios.post("https://orgbackend.vercel.app/owner/user", { 
-                    c_usr: Cookies.get("c_usr"),
-                    xs: Cookies.get("xs")
-                }).then(res => { 
-                   if(res.data === "Erros"){ 
-                    Cookies.remove("c_usr")
-                    Cookies.remove("xs")
-                    localStorage.clear()
-                   }
-                   else { 
-                       res.data.map(val => { 
-                         setnavtool(val)
-                     })
-                   }
-                })
-            }, 1000);
-        })
-
- 
 
     }, [])
 
