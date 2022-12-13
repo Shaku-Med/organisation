@@ -12,8 +12,28 @@
   scroll-behavior: smooth;
 }
 
-::-webkit-scrollbar{ 
-  display: none;
+.success_ms { 
+  position: fixed;
+  top:0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  flex-direction: column;
+  transform: scale(30);
+  transition: .5s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.success_ms.animenow { 
+  transform: scale(1);
+  visibility: visible;
+  opacity: 1;
 }
 
 .name_part{ 
@@ -159,7 +179,7 @@ html {
   background-image: linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url('https://p4.wallpaperbetter.com/wallpaper/567/948/11/guy-sunset-sky-wallpaper-preview.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: 0 0 ;
   height: 500px;
   display: flex;
   align-items: flex-start;
@@ -175,6 +195,60 @@ html {
 
 .hero_text .h1 { 
   font-size: 70px;
+}
+
+.leave_a_mes { 
+  padding:10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom:40px;
+
+  padding:50px;
+
+}
+
+.chat_one img { 
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 2px solid var(--borders);
+  object-fit: cover;
+  object-position: 0 0 ;
+  pointer-events: none;
+}
+
+.user_one { 
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  gap:10px;
+}
+
+.chat_one { 
+  display: flex;
+  flex-direction: column;
+  gap:5px;
+}
+
+.gbox { 
+  padding:10px;
+  border: 1px solid var(--borders);
+  border-radius: 10px;
+  height: fit-content;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.gbox::-webkit-scrollbar{ 
+  display: none;
+}
+
+.message_texts { 
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  gap:10px;
 }
 
 .hero_text .buttons { 
@@ -1113,6 +1187,23 @@ html {
   padding:10px;
 }
 
+.leave_a_mes { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.leave_a_mes input{ 
+  width: 100%;
+  padding:10px;
+}
+
+.leave_a_mes form { 
+  width: 100%;
+  max-width: 500px;
+}
+
 @media screen and (max-width: 1000px) {
 
  
@@ -1179,6 +1270,10 @@ html {
 
 
 @media screen and (max-width: 600px) {
+
+  .leave_a_mes { 
+    padding:10px;
+  }
 
   .com { 
     height: 30vh;

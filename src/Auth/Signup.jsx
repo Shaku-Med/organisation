@@ -187,12 +187,14 @@ function Signup() {
             tokens: token
         })
         setTimeout(() => {
+            let success_ms = document.querySelector(".success_ms")
             axios.post("https://testbackend.mohamedbrima.repl.co/signup/usr/done", arr).then(res => { 
                 if(res.data.success === "success"){ 
                     setmes("An Email Has Been Sent To This Account " + email + " Check Your Email For Your Account Activation Link.")
+                    success_ms.classList.add("animenow")
                     setTimeout(() => {
                         navigate("../")
-                    }, 4000);
+                    }, 10000);
                 }
                 else { 
                     alert(res.data.success)
@@ -330,8 +332,18 @@ function Signup() {
                  type="file" id="adifndoifndi" />
             </div>
 
-            <div className="shadow text-center p-4 text-primary">
-    {mes}
+            <div className="shadow text-center p-4 text-warning success_ms">
+    <strong>{mes}</strong> <br />
+    <hr />
+    <div className="text-center">
+      <abbr title="Go and Verify your account before your login. Or you won't be able to login">
+         Login When you verify your account
+      </abbr>
+    </div>
+    <br />
+    <Link className='text-center btn btn-outline-primary'>
+      Login
+    </Link>
    </div>
 
             <div className="col">

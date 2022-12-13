@@ -2,13 +2,14 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import React, { useEffect, useState } from 'react'
 import ReactLinkify from 'react-linkify';
-import { useParams } from 'react-router-dom';
-
+import { Link, useParams } from 'react-router-dom';
+import {v4 as uuid} from 'uuid'
 function Profile() {
 
     const {id} = useParams()
 
     const [datas, setdata] = useState([])
+    const [newmes, setnewmes] = useState([])
 
     useEffect(() => { 
         setTimeout(() => {
@@ -20,7 +21,16 @@ function Profile() {
             setdata(res.data)
           });
         }, 1000);
-    }, [])
+
+        axios.post("https://orgbackend.vercel.app/profile/chats", { 
+          ownerid: id
+        }).then(res => { 
+          setnewmes(res.data)
+        })
+
+    }, [id])
+
+    const [mess, setmess] = useState('')
 
   return (
    <> 
@@ -161,8 +171,95 @@ function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className="h1" style={{height: '20vh'}}></div>
                 </div>
+
+<hr />
+
+                <div className="leave_a_mes">
+                  <div className="message_texts">
+                    { 
+                      newmes.map((v, k) => { 
+                        if(v.ownerid === id){ 
+                          if(v.sendersid === v.c_usr){ 
+                            if(v.c_usr === Cookies.get("c_usr")){ 
+                              return ( 
+                                <div key={k} className="chat_one">
+                                <div className="user_one">
+                                <img onError={e => { 
+                                      e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
+                                  }} src={v.profilepic} alt="" />
+                                  <div className="nams">
+                                  {v.names}
+                                  </div>
+                                </div>
+                                <div className="gbox">
+                                  <ReactLinkify>
+                                   {v.message_sent}
+                                  </ReactLinkify>
+                                </div>
+                              </div>
+                              )
+                            }
+                            else { 
+                              return ( 
+                                <div key={k} className="chat_one">
+                                <div className="user_one">
+                                <img onError={e => { 
+                                      e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
+                                  }} src={v.profilepic} alt="" />
+                                  <div className="nams">
+                                    <Link to={"../Profile/" + v.c_usr}>
+                                      {v.names}
+                                    </Link>
+                                  </div>
+                                </div>
+                                <div className="gbox">
+                                  <ReactLinkify>
+                                   {v.message_sent}
+                                  </ReactLinkify>
+                                </div>
+                              </div>
+                              )
+                            }
+                          }
+                        }
+                      })
+                    }
+                  </div>
+
+                  <div className="leave_a_mes">
+                    <form onSubmit={e => { 
+                      let outtext = document.getElementById("outtext")
+                      e.preventDefault()
+                     if(mess !== ''){ 
+                      axios.post("https://orgbackend.vercel.app/chat/message", { 
+                        sendersid: Cookies.get("c_usr"),
+                        ownerid: id,
+                        message_sent: mess,
+                        messid: uuid()
+                      }).then(res => { 
+                        if(res.data.success === 'success'){ 
+                        setmess("")
+                        axios.post("https://orgbackend.vercel.app/profile/chats", { 
+                          ownerid: id
+                        }).then(res => { 
+                          setnewmes(res.data)
+                        })
+                
+                        }
+                      })
+                     }
+                    }} action="">
+                      <label htmlFor="" className='mb-2'>Leave a message: </label>
+                      <input onChange={e => { 
+                        setmess(e.target.value)
+                      }} type="text" name="" id="" />
+                       <button className="btn btn-outline-danger mt-2">Send</button>
+                    </form>
+                   </div>
+
+                </div>
+                
                </div>
             )
         }
@@ -216,8 +313,96 @@ function Profile() {
                             </div>
                         </div>
                     </div>
-                    <div className="h1" style={{height: '20vh'}}></div>
                 </div>
+<hr />
+                <div className="leave_a_mes">
+                  <div className="message_texts">
+                  { 
+                      newmes.map((v, k) => { 
+                        if(v.ownerid === id){ 
+                          if(v.sendersid === v.c_usr){ 
+                            if(v.c_usr === Cookies.get("c_usr")){ 
+                              return ( 
+                                <div key={k} className="chat_one">
+                                <div className="user_one">
+                                <img onError={e => { 
+                                      e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
+                                  }} src={v.profilepic} alt="" />
+                                  <div className="nams">
+                                  {v.names}
+                                  </div>
+                                </div>
+                                <div className="gbox">
+                                  <ReactLinkify>
+                                   {v.message_sent}
+                                  </ReactLinkify>
+                                </div>
+                              </div>
+                              )
+                            }
+                            else { 
+                              return ( 
+                                <div key={k} className="chat_one">
+                                <div className="user_one">
+                                <img onError={e => { 
+                                      e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
+                                  }} src={v.profilepic} alt="" />
+                                  <div className="nams">
+                                    <Link to={"../Profile/" + v.c_usr}>
+                                      {v.names}
+                                    </Link>
+                                  </div>
+                                </div>
+                                <div className="gbox">
+                                  <ReactLinkify>
+                                   {v.message_sent}
+                                  </ReactLinkify>
+                                </div>
+                              </div>
+                              )
+                            }
+                          }
+                        }
+                      })
+                    }
+                  </div>
+
+                   <div className="leave_a_mes">
+                    <form onSubmit={e => { 
+                      let outtext = document.getElementById("outtext")
+                      e.preventDefault()
+                     if(mess !== ''){ 
+                      axios.post("https://orgbackend.vercel.app/chat/message", { 
+                        sendersid: Cookies.get("c_usr"),
+                        ownerid: id,
+                        message_sent: mess,
+                        messid: uuid()
+                      }).then(res => { 
+                        if(res.data.success === 'success'){ 
+                          outtext.value = ""
+                        
+                        axios.post("https://orgbackend.vercel.app/profile/chats", { 
+                          ownerid: id
+                        }).then(res => { 
+                          setnewmes(res.data)
+                        })
+                
+                        }
+                      })
+                     }
+                    }}
+                     action="">
+                      <label htmlFor="" className='mb-2'>Leave a message: </label>
+                       <input onChange={e => { 
+                        setmess(e.target.value)
+                       }} type="text" name="" id="outtext" />
+                       <button className="btn btn-outline-danger mt-2">Send</button>
+                    </form>
+                   </div>
+
+                </div>
+
+
                </div>
             )
         }
