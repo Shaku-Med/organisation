@@ -151,7 +151,9 @@ function Call() {
                 }, 2000);
 
                 navigator.mediaDevices.getUserMedia({
-                    video:true,
+                    video:{ 
+                        facingMode: 'user'
+                    },
                     audio:true
                   }).then((stream)=>{
                     let video = document.createElement("video")
@@ -195,7 +197,9 @@ function Call() {
                 }, 2000);
 
                 navigator.mediaDevices.getUserMedia({
-                    video:true,
+                    video:{ 
+                        facingMode: 'user'
+                    },
                     audio:true
                   }).then((stream)=>{
                     let video = document.createElement("video")
