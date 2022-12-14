@@ -8,6 +8,7 @@ import Routing from './Routing';
 import Cookie from 'js-cookie'
 import Auth from './Auth/Auth';
 import helmet from 'helmet'
+import Cos from './Screen/Cos';
 
 
 
@@ -16,10 +17,18 @@ function App() {
   const [navtool, setnavtool] = useState('')
 
 
-  const [friends, setfriends] = useState('')
-  
-
   const [statuss, setstates] = useState('')
+
+
+  const [friends, setfriends] = useState([]);
+
+  const [rand, setrand] = useState('')
+
+  const [maint, setmaint] = useState([])
+
+
+  const [exptime, setexptime] = useState([])
+
 
   useEffect(() => { 
 
@@ -105,8 +114,9 @@ function App() {
             }
             else { 
              return ( 
-              <Connection.Provider key={key} value={{navtool, setnavtool, friends, setfriends}}>
+              <Connection.Provider key={key} value={{navtool, setnavtool, friends, setfriends, rand, setrand, maint, setmaint, exptime, setexptime}}>
                 <HashRouter>
+                  <Cos/>
                   <Topnav/>
                   <Leftnav/>
                   <Routing/>

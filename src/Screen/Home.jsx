@@ -6,43 +6,9 @@ import Linkify from "react-linkify";
 import { Connection } from "../Connection";
 
 function Home() {
-  const { navtool, setnavtool } = useContext(Connection);
-
-  const [friends, setfriends] = useState([]);
-
-  const [rand, setrand] = useState('')
-
-  const [maint, setmaint] = useState([])
-
-
-  const [exptime, setexptime] = useState([])
+  const { navtool, setnavtool, friends, setfriends, rand, setrand, maint, setmaint, exptime, setexptime } = useContext(Connection);
 
   useEffect(() => {
-    setTimeout(() => {
-        axios
-      .post("https://orgbackend.vercel.app/users/all", {
-        c_usr: Cookies.get("c_usr"),
-        xs: Cookies.get("xs"),
-      })
-      .then((res) => {
-        setfriends(res.data);
-        let ars_no = Math.floor(Math.random() * res.data.length)
-        setrand(res.data[ars_no])
-      });
-    }, 3000);
-
-
-    setTimeout(() => {
-        axios
-      .post("https://orgbackend.vercel.app/video/admin", {
-        c_usr: Cookies.get("c_usr"),
-        xs: Cookies.get("xs"),
-      })
-      .then((res) => {
-        setmaint(res.data)
-      });
-    }, 5000);
-
     var medias = Array.prototype.slice.apply(document.querySelectorAll('audio,video'));
     medias.forEach(function(media) {
       media.addEventListener('play', function(event) {
@@ -51,12 +17,6 @@ function Home() {
         });
       });
     });
-
-    let daa = new Date(),
-    dase = daa.getDate()
-
-    setexptime(dase)
-
   }, []);
 
   return (
