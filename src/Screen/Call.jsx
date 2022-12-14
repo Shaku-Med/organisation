@@ -124,10 +124,10 @@ function Call() {
 
     }, [ide])
 
-    const peer = new Peer()
-
+    
     useEffect(() => { 
-
+        
+        const peer = new Peer()
         let alert_mes = document.querySelector(".alert_mes")
         let call_videos = document.querySelector(".call_videos")
         
@@ -291,13 +291,6 @@ function Call() {
 
         <div className="call_container">
             <div className="call_videos">
-            </div>
-        </div>
-        <div className="vid_plays shadow">
-            <div className="buttons">
-                <button className="btn btn-outline-warning">Mute</button>
-                <button className="btn btn-outline-success">Video</button>
-                <button className="btn btn-outline-danger">End Call</button>
             </div>
         </div>
     </div>
