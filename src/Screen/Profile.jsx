@@ -125,7 +125,7 @@ function Profile() {
                       <label htmlFor="img_part">
                       <img onError={e => { 
                                   e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                              }} src={val.profilepic} alt="" id='file_main' style={{cursor: 'pointer', PointerEvent: 'none'}}/>
+                              }} src={val.profilepic} alt="" id='file_main' style={{cursor: 'pointer', PointerEvent: 'none', objectFit: 'cover', objectPosition: '0px 0px'}}/>
                       </label>
                       <div className="h1">
                         <div className="name_main mb-3">
@@ -278,7 +278,7 @@ function Profile() {
                   <div className="proi_names">
                       <img onError={e => { 
                                   e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                              }} src={val.profilepic} alt="" />
+                              }} src={val.profilepic} style={{pointerEvents: 'none',  objectFit: 'cover', objectPosition: '0px 0px'}} alt="" />
                       <div className="h1">
                         <div className="name_main mb-3">
                           {val.names}
