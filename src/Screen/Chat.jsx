@@ -13,6 +13,8 @@ const socket = new io("https://testbackend.mohamedbrima.repl.co")
 
 function Chat() {
 
+    const {navtool, setnavtool} = useContext(Connection)
+
     const [rand, setrand] = useState('')
 
     const [friends, setfriends] = useState([]);
@@ -47,6 +49,7 @@ function Chat() {
             setmainm(data)
         })
 
+
     }, [])
 
     const [chat, setchat] = useState("")
@@ -69,8 +72,13 @@ function Chat() {
     <div className='homie'>
         <div className="chat_containers">
             <div className="chat_head">
-                <div className="g_one">
-                    Group Chat
+                <div  onClick={e => { 
+                    if(window.confirm("This action might not work on an apple device. Do you wish to move to the next screen?") === true){ 
+                        window.open("../#/Call/" + navtool.c_usr, "_self")
+                    }
+                }} className="g_one" style={{gap:'10px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <i className="fa fa-video"></i>
+                    Video Chat
                 </div>
                 <div className="chat_mem_o">
                     { 

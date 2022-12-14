@@ -82,7 +82,7 @@ function Home() {
             😊
           </div>
           <div className="new_t text-center">
-            A new feature has been added to this website. Can someone guess? Yes it's a realtime fast chatting application. This means, You can chat with any one who is signed in to this app. And the best this is, It's free 😊
+            A new feature has been added to this website. Can someone guess? Yes it's a realtime fast chatting and video calls. This means, You can chat and call  any one who is signed in to this app. And the best this is, It's free 😊
           </div>
           <div onClick={e => { 
             window.open("../#/Chat", "_self")
