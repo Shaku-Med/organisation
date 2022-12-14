@@ -14,7 +14,7 @@ function Routing() {
     <Route path='/Profile/:id' element={<Profile/>}/>
     <Route path='/Preview' element={<Preview/>}/>
     <Route path='/Chat' element={<Chat/>}/>
-    <Route path='/Call/:id' element={<Call/>}/>
+    <Route path='/Call/:ide' element={<Call/>}/>
    </Routes>
   )
 }

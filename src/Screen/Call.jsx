@@ -15,8 +15,9 @@ function Call() {
     const [timers, settimers] = useState('')
     const [alerts, setalerts] = useState('')
 
-    const {id} = useParams()
-    const peer = new Peer(id);
+    const [left, setlefts] = useState(false)
+
+    const {ide} = useParams()
 
 
     useEffect(() => { 
@@ -121,23 +122,25 @@ function Call() {
             }
         })
 
-    }, [id])
+    }, [ide])
+
+    const peer = new Peer()
 
     useEffect(() => { 
 
         let alert_mes = document.querySelector(".alert_mes")
         let call_videos = document.querySelector(".call_videos")
+        
 
-        let video = document.createElement("video")
-
-        const peer = new Peer()
-
-        peer.on("open", () => { 
+        peer.on("open", (id) => { 
             socket.emit("newUsr", { 
-                dii: id,
+                peerid: id,
+                dii: ide,
                 c_usr: Cookies.get("c_usr")
             })
         })
+
+      
 
         socket.on("alert_us", e => { 
             if(e.c_usr === Cookies.get("c_usr")){ 
@@ -146,6 +149,43 @@ function Call() {
                 setTimeout(() => {
                     alert_mes.classList.remove("show_p")
                 }, 2000);
+
+                navigator.mediaDevices.getUserMedia({
+                    video:true,
+                    audio:true
+                  }).then((stream)=>{
+                    let video = document.createElement("video")
+                    const call  = peer.call(e.outmain , stream);
+    
+                    addstream(video , stream);
+
+
+                    call.on('error' , (err)=>{
+                        alert(err);
+                      })
+
+                      peer.on("close", es => { 
+                        setlefts(true)
+                      })
+
+                      peer.on("call", call => { 
+                        call.answer(stream)
+
+                        const vid = document.createElement('video');
+ 
+                        // This event append the user stream.
+                        call.on('stream' , userStream=>{
+                           if(left === false){ 
+                            addstream(vid , userStream);
+                           }
+                        })
+
+                     })
+    
+                  }).catch(err=>{
+                      alert("Unable to capture your video")
+                  })
+
             }
             else { 
                 setalerts(e.states === 'Admin' ? "Admin " + " Joined The video chat" : e.names + " Joined The video chat")
@@ -153,34 +193,84 @@ function Call() {
                 setTimeout(() => {
                     alert_mes.classList.remove("show_p")
                 }, 2000);
+
+                navigator.mediaDevices.getUserMedia({
+                    video:true,
+                    audio:true
+                  }).then((stream)=>{
+                    let video = document.createElement("video")
+                    const call  = peer.call(e.outmain , stream);
+    
+                    addstream(video , stream);;
+            
+
+                    call.on('error' , (err)=>{
+                        alert(err);
+                      })
+
+                      peer.on("close", es => { 
+                        setlefts(true)
+                      })
+
+                      peer.on("call", call => { 
+                        call.answer(stream)
+
+                        const vid = document.createElement('video');
+ 
+                        // This event append the user stream.
+
+                        call.on('stream' , userStream=>{
+                            if(left === false){ 
+                                addstream(vid , userStream);
+                               }
+                        })
+
+                     })
+                     
+    
+                  }).catch(err=>{
+                      alert("Unable to capture your video")
+                  })
+
             }
 
-            navigator.mediaDevices.getUserMedia({ 
-                video: true,
-                audio: true
-            }).then(stream => { 
-                addstream(video, stream)
-            })
+
+            
+
         })
 
-        function addstream(video, stream) { 
-          if("srcObject" in video){ 
-            video.srcObject = stream
-            video.addEventListener("loadedmetadata", () => { 
-             video.play()
-            })
-            call_videos.append(video)
-          }
-          else { 
-            video.src = window.URL.createObjectURL(video)
-            video.addEventListener("loadedmetadata", () => { 
-             video.play()
-            })
-            call_videos.append(video)
-          }
-        }
 
-    }, [id])
+        function addstream(video, stream) { 
+            if("srcObject" in video){ 
+              video.srcObject = stream
+              video.addEventListener("loadedmetadata", () => { 
+               video.play()
+              })
+             
+              if(left === true){ 
+                video.remove()
+              }
+              else { 
+                call_videos.append(video)
+              }
+            }
+            else { 
+              video.src = window.URL.createObjectURL(video)
+              video.addEventListener("loadedmetadata", () => { 
+               video.play()
+              })
+              if(left === true){ 
+                video.remove()
+              }
+              else { 
+                call_videos.append(video)
+              }
+            }
+          }
+
+        
+
+    }, [ide])
 
   return (
     <div className="call_ready">
@@ -194,6 +284,7 @@ function Call() {
             <div className="card-text text-success">{alerts}</div>
             </div>
         </div>
+
         <div className="call_container">
             <div className="call_videos">
             </div>
