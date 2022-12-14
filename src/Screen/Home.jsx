@@ -433,6 +433,7 @@ function Home() {
                                 "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ=";
                             }}
                             src={val.profilepic}
+                            style={{pointerEvents: 'none', objectPosition: '0px 0px', objectFit: 'cover'}}
                             alt=""
                           />
                         </div>
