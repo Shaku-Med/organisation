@@ -310,7 +310,7 @@ html {
 
 .bgimg { 
   background-image: linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url('https://p4.wallpaperbetter.com/wallpaper/567/948/11/guy-sunset-sky-wallpaper-preview.jpg');
-  background-position: center ;
+  background-position: 0 0 ;
   width: 100%;
   height: 200px;
   background-repeat: no-repeat;
