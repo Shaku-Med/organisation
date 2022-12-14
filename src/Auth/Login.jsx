@@ -70,8 +70,8 @@ function Login() {
             }).then(res => { 
                 if(res.data.success === 'success'){ 
                     setmes(true)
-                        Cookies.set("c_usr", res.data.c_usr)
-                        Cookies.set("xs", res.data.xs)
+                        Cookies.set("c_usr", res.data.c_usr, {secure: true, expires: 365})
+                        Cookies.set("xs", res.data.xs,  {secure: true, expires: 365})
                         localStorage.setItem("c_usr", res.data.c_usr)
                         setTimeout(() => {
                             window.location.reload()
