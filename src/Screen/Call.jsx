@@ -164,11 +164,20 @@ function Call() {
         })
 
         function addstream(video, stream) { 
-           video.srcObject = stream
-           video.addEventListener("loadedmetadata", () => { 
-            video.play()
-           })
-           call_videos.append(video)
+          if("srcObject" in video){ 
+            video.srcObject = stream
+            video.addEventListener("loadedmetadata", () => { 
+             video.play()
+            })
+            call_videos.append(video)
+          }
+          else { 
+            video.src = window.URL.createObjectURL(video)
+            video.addEventListener("loadedmetadata", () => { 
+             video.play()
+            })
+            call_videos.append(video)
+          }
         }
 
     }, [id])
