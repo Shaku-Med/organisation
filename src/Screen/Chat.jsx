@@ -20,6 +20,8 @@ function Chat() {
     const [friends, setfriends] = useState([]);
     const [mainme, setmainm] = useState([]);
 
+    const [outact, setactions] = useState([])
+
     useEffect(() => { 
         setTimeout(() => {
             axios
@@ -82,7 +84,7 @@ function Chat() {
                 </div>
                 <div className="chat_mem_o">
                     { 
-                      friends.length < 1 ? "Processing..." :
+                      friends.length < 1 ? "Fetching..." :
                       friends.map((val, key) => { 
                         if(val.c_usr !== Cookies.get("c_usr")){ 
                             return ( 
@@ -102,7 +104,7 @@ function Chat() {
                         if(val.sendersid === val.c_usr){ 
                             if(val.sendersid === Cookies.get("c_usr")){ 
                                 return ( 
-                                    <div key={key} className="chat_r">
+                                    <div id="disabme" key={key} className="chat_r">
                                     <div className="c_1">
                                       <div className="na">
                                       <div className="nam">
@@ -112,7 +114,24 @@ function Chat() {
                                             e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
                                         }} src={val.profilepic} alt="" />
                                       </div>
-                                      <div className="cMes">
+                                      <div id="disabme" onDoubleClick={e => { 
+                                        setactions({ 
+                                            mes: val.message_sent,
+                                            mesid: val.messageid
+                                        })
+                                        let dle_te = document.querySelector(".dle_te")
+                                        dle_te.classList.add("dl")
+
+
+                                        dle_te.addEventListener("click", es => { 
+                                            if(es.target.className !== "del_cont" && es.target.className !== "txt_sho"){ 
+                                                dle_te.classList.remove("dl")
+                                            }
+                                        })
+
+                                        
+
+                                      }} className="cMes">
                                          <Linkify>
                                          {val.message_sent}
                                          </Linkify>
@@ -162,6 +181,47 @@ function Chat() {
                     </button>
                 </form>
             </div>
+        </div>
+        <div className="dle_te">
+           { 
+            [outact].map((val, key) => { 
+                return ( 
+                    <div key={key} id="disabme" className="del_cont">
+                        <div className="ac">
+                            <h4>Action</h4>
+                        </div>
+                        <hr />
+                    <div className="txt_sho">
+                        {val.mes}
+                    </div>
+                    <div className="optios">
+                        <button
+                           onClick={e => { 
+                            let snd_tadk = document.querySelector("#snd_tadk")
+                            socket.emit("chat_datas", {
+                                sendersid: Cookies.get("c_usr"),
+                                message_sent: val.mes,
+                                messageid: uuid()
+                            })
+                            snd_tadk.value = ""
+                            setchat('')
+                          }}
+                         className="btn btn-outline-primary">Re Send</button>
+                        <button
+                         onClick={e => { 
+                            if(window.confirm("Do you wish to delete this message? ") === true){ 
+                                socket.emit("delete_mes", { 
+                                    sendersid: Cookies.get("c_usr"),
+                                    messageid: val.mesid
+                                })
+                            }
+                         }}
+                         className="btn btn-outline-danger">Delete</button>
+                    </div>
+                   </div>
+                )
+            })
+           }
         </div>
     </div>
   )
