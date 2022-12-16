@@ -118,7 +118,7 @@ function Login() {
     <video loop playsInline autoPlay muted id='myvideo' src={bgimg}></video>
       <div className="login_container" style={{height: window.innerHeight}}>
         <div className="log_o">
-            <img src="../mainlogo.png" alt="" />
+            <img style={{pointerEvents: 'none'}} src="../mainlogo.png" alt="" />
             <div className="h1 mt-2" style={{fontWeight: 'bold'}}>Welcome Again.</div>
             <small className="mt-2 text-center" style={{maxWidth: '400px'}}>Anything typed here can't be sniffed, hacked, leaked, spoofed or virtually logging in. Your informations are well secured</small>
         </div>
