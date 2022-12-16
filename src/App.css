@@ -1597,7 +1597,88 @@ html {
   pointer-events: none;
 }
 
+.signup_form { 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding:40px;
+  height: 100vh;
+}
+
+.conn_ooo { 
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 1200px;
+}
+
+.conn_ooo video{ 
+  object-fit: cover;
+  height: 100%;
+}
+
+.first_part { 
+  height: 600px;
+}
+
+.form_co_s { 
+  height: 600px;
+}
+
 @media screen and (max-width: 1000px) {
+
+  .signup_form { 
+    padding: 0;
+  }
+
+  .conn_ooo{ 
+    overflow: auto;
+    height: 100vh;
+  }
+
+  .conn_ooo input{ 
+    border: 2px solid white;
+    border-radius: 10px;
+    background:var(--borders);
+    outline: none;
+    color: black;
+  }
+  
+  .conn_ooo input::placeholder{ 
+    color: var(--mainbg);
+  }
+
+  .conn_ooo select { 
+    background:var(--borders);
+    border: 2px solid white;
+    color: black;
+  }
+
+  .conn_ooo option { 
+    background:var(--borders);
+    border: 2px solid white;
+    color: black;
+  }
+
+  .conn_ooo textarea { 
+    background:var(--borders);
+    border: 2px solid white;
+    color: black;
+  }
+
+  .conn_ooo button { 
+    font-size: 20px;
+    background: var(--borders);
+    color: black;
+    border: none;
+  }
+
+
+  .conn_ooo { 
+    display: block;
+  }
 
   .call_ready { 
     padding: 100px 10px 20px 10px;
@@ -1609,10 +1690,6 @@ html {
     height: 100%;
   }
 
-
-  .first_part { 
-    height: 200px;
-  }
 
   .callings { 
     padding: 0;
@@ -1658,8 +1735,21 @@ html {
   .signup_form { 
     overflow: auto;
   }
- 
- 
+
+    .first_part  
+  { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    overflow: hidden;
+    position: fixed;
+    top:0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(20px);
+  }
 }
 
 

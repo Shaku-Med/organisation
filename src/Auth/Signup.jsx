@@ -10,6 +10,7 @@ function Signup() {
 
     const navigate = useNavigate()
 
+    let [bgimg, setbgimg] = useState([])
 
     useEffect(() => { 
         let body = document.querySelector("body")
@@ -24,6 +25,24 @@ function Signup() {
         setInterval(() => {
             localStorage.clear()
         }, 10);
+
+        let vid_poc = [
+            "https://player.vimeo.com/external/538575833.sd.mp4?s=a789a6da0dbe1e5353b671887e571502fd567255&profile_id=165&oauth2_token_id=57447761#t=1",
+            "https://player.vimeo.com/external/538576868.sd.mp4?s=1adeee6c0a4f053893d9903f2923060dc79c6c96&profile_id=165&oauth2_token_id=57447761#t=1",
+            "https://player.vimeo.com/external/542230100.sd.mp4?s=21ed0085171cd506a07913bd8316042446a1ced2&profile_id=165&oauth2_token_id=57447761#t=1",
+            "https://pic.pikbest.com/18/23/98/86C888piCBPh.mp4#t=1",
+            "https://player.vimeo.com/external/468462298.sd.mp4?s=c7ebff7ac3693188ab19d3ede97129ad5e035b64&profile_id=164&oauth2_token_id=57447761#t=1",
+            "https://player.vimeo.com/external/482032091.sd.mp4?s=3894ac8c829e2a945d5b2525ba2325e6890af37b&profile_id=164&oauth2_token_id=57447761#t=1",
+            "https://player.vimeo.com/external/394718464.sd.mp4?s=e369f0eda883f16d097c348d9be0a5a7a3baf7e0&profile_id=165&oauth2_token_id=57447761#t=1",
+            "https://player.vimeo.com/external/454669949.sd.mp4?s=91c21cbc1e2ad65669d5893826609acecd551053&profile_id=164&oauth2_token_id=57447761#t=1",
+            "https://player.vimeo.com/external/434854024.sd.mp4?s=41bc8486f80af1a2c888dd22b3f2e671f03cdadb&profile_id=164&oauth2_token_id=57447761#=1",
+            "https://player.vimeo.com/external/428245187.sd.mp4?s=be339c5041379428b01a92f1507745a57e676be7&profile_id=165&oauth2_token_id=57447761#=1",
+            "https://player.vimeo.com/external/491155197.sd.mp4?s=d00473cf091f24a76db2ba08465c1630ac826daa&profile_id=164&oauth2_token_id=57447761#t=1"
+        ]
+
+        let rands = Math.floor(Math.random() * vid_poc.length)
+
+        setbgimg(vid_poc[rands])
 
     }, [])
 
@@ -218,8 +237,9 @@ function Signup() {
   
   return (
    <div className="signup_form text-white">
-    <div className="first_part">
-    <video loop playsInline autoPlay muted id='myvideo' src="https://pic.pikbest.com/18/23/98/86C888piCBPh.mp4#t=1"></video>
+     <div className="conn_ooo">
+     <div className="first_part">
+    <video loop playsInline autoPlay muted  src={bgimg}></video>
     <div className="on_me">
     <img src="../mainlogo.png" alt="" />
         <h1>Welcome! Sign up</h1>
@@ -354,6 +374,7 @@ function Signup() {
             <div className="com"></div>
         </form>
     </div>
+     </div>
    </div>
   )
 }
