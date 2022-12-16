@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 function Notfound() {
 
@@ -15,7 +16,15 @@ function Notfound() {
   return (
     <div className="lost_vid">
         <video loop autoPlay playsInline muted id='myvideo' src="https://pic.pikbest.com/18/23/98/86C888piCBPh.mp4#t=1"></video>
-        <h1 className='text-center'>Page not found</h1>
+        <h1 className='text-center' style={{flexDirection: 'column', fontSize: '20px'}}>
+        Page not found
+        <br />
+            <br />
+        <Link to={"../"} className='btn btn-outline-danger'>
+          Go Home
+        </Link>
+        </h1>
+      
         <button onClick={e => { 
             let myvideo = document.querySelector("#myvideo")
             myvideo.play()

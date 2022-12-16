@@ -188,7 +188,7 @@ function Signup() {
         })
         setTimeout(() => {
             let success_ms = document.querySelector(".success_ms")
-            axios.post("https://testbackend.mohamedbrima.repl.co/signup/usr/done", arr).then(res => { 
+            axios.post("https://orgbackend.vercel.app/signup/usr/done", arr).then(res => { 
                 if(res.data.success === "success"){ 
                     setmes("An Email Has Been Sent To This Account " + email + " Check Your Email For Your Account Activation Link.")
                     success_ms.classList.add("animenow")
@@ -341,7 +341,7 @@ function Signup() {
       </abbr>
     </div>
     <br />
-    <Link className='text-center btn btn-outline-primary'>
+    <Link to={"../"} className='text-center btn btn-outline-primary'>
       Login
     </Link>
    </div>
