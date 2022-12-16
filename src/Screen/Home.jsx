@@ -38,8 +38,7 @@ function Home({socket}) {
         <div className="hero_text">
           <div className="h1">Top Organization Member</div>
           <div className="card-text mt-2 mb-4">
-            <b className="text-danger">{rand.names}</b> has been in the orgainzation for quite a long
-            time. We wish he get's his best time on this orgainzation.
+            <b className="text-danger">{rand.names}</b> Welcome to O.R.G. We hope you get what you need from this website. Guys, If you'd like to view {rand.gend === "Female" ? "her" : "his"} Profile page, Click on view profile.
           </div>
           <div className="buttons">
             <button onClick={e => { 
@@ -55,11 +54,12 @@ function Home({socket}) {
             😊
           </div>
           <div className="new_t text-center">
-            A new feature has been added to this website. Can someone guess? Yes it's a realtime fast chatting and video calls. This means, You can chat and call  any one who is signed in to this app. And the best this is, It's free 😊
+           Fast, One Click, Send, Go. Click now and communicate with your organization memebrs in real time. Don't worry, you can delete your message if you did a mistake. 
           </div>
+          <img src="https://i.pinimg.com/originals/7c/1d/ab/7c1dab157f34e603487b5d0b057da448.gif" alt="" />
           <div onClick={e => { 
             window.open("../#/Chat", "_self")
-          }} className=" tryit btn btn-outline text-center w-100 mt-3">Try it</div>
+          }} className=" tryit btn btn-outline text-center w-100">Try it</div>
         </div>
       </div>
 

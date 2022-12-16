@@ -1591,6 +1591,12 @@ html {
   opacity: 1;
 }
 
+.mid_man img { 
+  width: 100%;
+  margin-top: 10px;
+  pointer-events: none;
+}
+
 @media screen and (max-width: 1000px) {
 
   .call_ready { 
