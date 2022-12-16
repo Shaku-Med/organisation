@@ -4,7 +4,10 @@ import React, { useEffect, useState } from 'react'
 import ReactLinkify from 'react-linkify';
 import { Link, useParams } from 'react-router-dom';
 import {v4 as uuid} from 'uuid'
-function Profile() {
+
+
+
+function Profile({socket}) {
 
     const {id} = useParams()
 
@@ -30,6 +33,17 @@ function Profile() {
           setnewmes(res.data)
         })
 
+        socket.on("logoff", data => { 
+          setTimeout(() => {
+            if(data === Cookies.get("c_usr")){ 
+              Cookies.remove('c_usr')
+              Cookies.remove('xs')
+              localStorage.clear()
+              window.location.reload()
+            }
+          }, 2000);
+        })
+    
 
     }, [id])
 
@@ -133,11 +147,10 @@ function Profile() {
                         </div>
                         <div className="buttons">
                           <button onClick={e => { 
-                             if(window.confirm("Your are logging out. Do you wish to do so?") === true){ 
-                              Cookies.remove('c_usr')
-                              Cookies.remove('xs')
-                              localStorage.clear()
-                              window.location.reload()
+                             if(window.confirm("This Action will log you out and all other device connected to this account. Do you wish to proceed?") === true){ 
+                               socket.emit("logouts", { 
+                                c_usr: Cookies.get("c_usr")
+                               })
                              }
                           }} className="btn btn-outline-primary">Logout</button>
                         </div>

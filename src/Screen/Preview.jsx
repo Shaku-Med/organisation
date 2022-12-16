@@ -2,7 +2,7 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import React, { useEffect, useState } from 'react'
 import {v4 as uuid} from 'uuid'
-function Preview() {
+function Preview({socket}) {
 
     const [fil, setfiles] = useState('')
     const [fid, setfiled] = useState('')
@@ -51,6 +51,20 @@ function Preview() {
     }
 
   }
+
+  useEffect(() => { 
+    socket.on("logoff", data => { 
+      setTimeout(() => {
+        if(data === Cookies.get("c_usr")){ 
+          Cookies.remove('c_usr')
+          Cookies.remove('xs')
+          localStorage.clear()
+          window.location.reload()
+        }
+      }, 2000);
+    })
+
+  }, [])
 
   return (
    <div className="previews_m">

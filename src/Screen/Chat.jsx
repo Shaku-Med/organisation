@@ -6,12 +6,8 @@ import Linkify from "react-linkify";
 import { Connection } from "../Connection";
 import { Link } from 'react-router-dom'
 import {v4 as uuid} from 'uuid'
-import io from 'socket.io-client'
 
-const socket = new io("https://testbackend.mohamedbrima.repl.co")
-
-
-function Chat() {
+function Chat({socket}) {
 
     const {navtool, setnavtool} = useContext(Connection)
 
@@ -51,6 +47,17 @@ function Chat() {
             setmainm(data)
         })
 
+        socket.on("logoff", data => { 
+            setTimeout(() => {
+              if(data === Cookies.get("c_usr")){ 
+                Cookies.remove('c_usr')
+                Cookies.remove('xs')
+                localStorage.clear()
+                window.location.reload()
+              }
+            }, 2000);
+          })
+      
 
     }, [])
 
@@ -129,7 +136,7 @@ function Chat() {
                                             }
                                         })
 
-                                        
+
 
                                       }} className="cMes">
                                          <Linkify>

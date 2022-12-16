@@ -3,14 +3,11 @@ import { Peer } from "peerjs";
 import { useParams } from 'react-router-dom';
 import {v4 as uuid} from 'uuid'
 
-import io from 'socket.io-client'
 import Cookies from 'js-cookie';
 
-const socket = new io("https://testbackend.mohamedbrima.repl.co")
 
 
-
-function Call() {
+function Call({socket}) {
 
     const [timers, settimers] = useState('')
     const [alerts, setalerts] = useState('')
@@ -121,6 +118,18 @@ function Call() {
                     }; 
             }
         })
+
+        socket.on("logoff", data => { 
+            setTimeout(() => {
+              if(data === Cookies.get("c_usr")){ 
+                Cookies.remove('c_usr')
+                Cookies.remove('xs')
+                localStorage.clear()
+                window.location.reload()
+              }
+            }, 2000);
+          })
+      
 
     }, [ide])
 

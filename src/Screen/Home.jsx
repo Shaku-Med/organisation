@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Linkify from "react-linkify";
 import { Connection } from "../Connection";
 
-function Home() {
+function Home({socket}) {
   const { navtool, setnavtool, friends, setfriends, rand, setrand, maint, setmaint, exptime, setexptime } = useContext(Connection);
 
   useEffect(() => {
@@ -17,6 +17,19 @@ function Home() {
         });
       });
     });
+
+    socket.on("logoff", data => { 
+      setTimeout(() => {
+        if(data === Cookies.get("c_usr")){ 
+          Cookies.remove('c_usr')
+          Cookies.remove('xs')
+          localStorage.clear()
+          window.location.reload()
+        }
+      }, 2000);
+    })
+
+    
   }, []);
 
   return (
