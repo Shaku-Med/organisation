@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { Connection } from './Connection';
-import {BrowserRouter} from 'react-router-dom'
+import {HashRouter} from 'react-router-dom'
 import Leftnav from './Navs/Leftnav';
 import Topnav from './Navs/Topnav';
 import Routing from './Routing';
@@ -107,20 +107,20 @@ function App() {
           else { 
             if(val.login === true){ 
               return ( 
-                <BrowserRouter key={key}>
+                <HashRouter key={key}>
                   <Auth/>
-                </BrowserRouter>
+                </HashRouter>
               )
             }
             else { 
              return ( 
               <Connection.Provider key={key} value={{navtool, setnavtool, friends, setfriends, rand, setrand, maint, setmaint, exptime, setexptime}}>
-                <BrowserRouter>
+                <HashRouter>
                   <Cos/>
                   <Topnav/>
                   <Leftnav/>
                   <Routing/>
-                </BrowserRouter>
+                </HashRouter>
             </Connection.Provider>
              )
             }
