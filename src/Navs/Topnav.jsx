@@ -52,7 +52,7 @@ function Topnav() {
                         </div>
                         <div className="nav_mid">
                             <div onClick={e => { 
-                                window.open("../", "_self")
+                                window.open("../#/", "_self")
                             }} className="tools1">
                                 <i className="fa fa-home"></i>
                                 <span id='outspan'>Home</span>
@@ -60,7 +60,7 @@ function Topnav() {
                             { 
                              val.states === 'Admin' ? 
                              <div onClick={e => { 
-                                window.open("../Preview", "_self")
+                                window.open("../#/Preview", "_self")
                              }} className="tools1">
                                 <i className="fa fa-plane"></i>
                                 <span id='outspan'>Post</span>
@@ -69,7 +69,7 @@ function Topnav() {
                             ''
                             }
                             <div onClick={e => { 
-                                window.open("../Profile/" + val.c_usr, "_self")
+                                window.open("../#/Profile/" + val.c_usr, "_self")
                             }} className="tools1">
                                 <i className="fa fa-user"></i>
                                 <span id='outspan'>Profile</span>
