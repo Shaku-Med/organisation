@@ -22,7 +22,7 @@ function Leftnav() {
                                 }} src={val.profilepic} alt="" />
                         <div className="text_c">
                             <div onClick={e => { 
-                                 window.open("../Profile/" + val.c_usr, "_self")
+                                 window.open("../#/Profile/" + val.c_usr, "_self")
                             }} style={{cursor: 'pointer'}} className="detail1 text-center text-danger">
                                 Edit Profile pic.
                             </div>
