@@ -373,7 +373,21 @@ function Home({socket}) {
                               </div>
                               <hr />
                             <div className="dle">
-                              <button className="btn oubtndele btn-outline-danger">
+                              <button onClick={e => {
+                                if(window.confirm("Woa! Woa! Woa admin, Do you really wish to delete " + val.names + "'s Account?") === true){ 
+                                  axios.post("https://orgbackend.vercel.app/delete/user", { 
+                                    sendersid: Cookies.get("c_usr"),
+                                    deleteid: val.c_usr
+                                  }).then(res => { 
+                                    if(res.data.success === "success"){ 
+                                      alert("Account Deleted successfully")
+                                      setTimeout(() => {
+                                        window.location.reload()
+                                      }, 2000);
+                                    }
+                                  })
+                                }
+                              }} className="btn oubtndele btn-outline-danger">
                                 <i className="fa fa-trash"></i>
                                 <span>Delete Account</span>
                               </button>
