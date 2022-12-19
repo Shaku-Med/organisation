@@ -260,7 +260,7 @@ function Home({socket}) {
                       <div key={key} className="groups_mem">
                         <div className="alert_mess shadow">
                           <div className="h4">
-                            <div className="ts">User Datas</div>
+                            <div className="ts"> {val.names.split(" ")[0] + "'s Data"}</div>
                           </div>
                           <hr />
                           <div className="impo_txt itm1">
@@ -371,6 +371,12 @@ function Home({socket}) {
                                   {val.vtxt}
                                 </div>
                               </div>
+                            </div>
+                            <div className="dle">
+                              <button className="btn btn-outline-danger">
+                                <i className="fa fa-trash"></i>
+                                <span>Delete</span>
+                              </button>
                             </div>
                           </div>
                         </div>
