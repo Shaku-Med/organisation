@@ -373,9 +373,9 @@ function Home({socket}) {
                               </div>
                               <hr />
                             <div className="dle">
-                              <button className="btn btn-outline-danger">
+                              <button className="btn oubtndele btn-outline-danger">
                                 <i className="fa fa-trash"></i>
-                                <span>Delete</span>
+                                <span>Delete Account</span>
                               </button>
                             </div>
                             </div>
