@@ -371,12 +371,13 @@ function Home({socket}) {
                                   {val.vtxt}
                                 </div>
                               </div>
-                            </div>
+                              <hr />
                             <div className="dle">
                               <button className="btn btn-outline-danger">
                                 <i className="fa fa-trash"></i>
                                 <span>Delete</span>
                               </button>
+                            </div>
                             </div>
                           </div>
                         </div>
