@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { Connection } from './Connection';
-import {HashRouter} from 'react-router-dom'
-import Leftnav from './Navs/Leftnav';
+import {BrowserRouter, HashRouter} from 'react-router-dom'
 import Topnav from './Navs/Topnav';
 import Routing from './Routing';
 import Cookie from 'js-cookie'
 import Auth from './Auth/Auth';
-import helmet from 'helmet'
-import Cos from './Screen/Cos';
+import * as helmet from 'helmet'
 
 
 
@@ -19,20 +17,20 @@ function App() {
 
   const [statuss, setstates] = useState('')
 
-
-  const [friends, setfriends] = useState([]);
-
-  const [rand, setrand] = useState('')
-
-  const [maint, setmaint] = useState([])
+  const [auth, setauth] = useState(0)
 
 
-  const [exptime, setexptime] = useState([])
+  // 
 
 
+  const [owner, setowner] = useState([])
+  const [allusr, setallusr] = useState([])
+
+  const [resetstate, setresetstate] = useState(0)
+// 
   useEffect(() => { 
 
-    const timer = Math.floor(Math.random() * 10000) - 10
+    const timer = Math.floor(Math.random() * 8000) - 10
 
      setTimeout(() => {
       if(window.top !== window.self){ 
@@ -42,20 +40,12 @@ function App() {
         })
       }
       else { 
-        if(Cookie.get("c_usr") && Cookie.get("xs") && localStorage.getItem("c_usr")){ 
-          if(Cookie.get("c_usr") !== null && Cookie.get("xs") !== null && localStorage.getItem("c_usr") !== null){ 
-            if(Cookie.get('c_usr') === localStorage.getItem("c_usr")){ 
-              setstates({ 
-                login: false,
-                frame: false,
-              })
-            }
-            else { 
-              setstates({ 
-                login: true,
-                frame: false,
-              })
-            }
+        if(Cookie.get("c_usr") && Cookie.get("xs")){ 
+          if(Cookie.get("c_usr") !== null && Cookie.get("xs") !== null){ 
+            setstates({ 
+              login: false,
+              frame: false,
+            })
           }
           else { 
             setstates({ 
@@ -72,21 +62,26 @@ function App() {
         }
       }
      }, timer);
+    }, [auth]);
 
-    }, []);
+    
 
   return (
     <>
       { 
         statuss === '' ?
-        <div className="payload">
-          <div className="spinner">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        </div>
+        <div style={{
+          backgroundImage: `url(${'https://media0.giphy.com/media/OK5LK5zLFfdm/giphy.gif?cid=ecf05e47cytw6uzgc99k7vdjg9zud5rskw3266kmad9jtcld&rid=giphy.gif&ct=g'})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          flexDirection: 'column',
+          gap: 20
+        }} className="payload">
+         <img style={{
+          width: 80
+         }} src="https://orgainze.vercel.app/mainlogo.png" alt="" />
+          <h3>Loading...</h3>
         </div>
         :
         [statuss].map((val, key) => { 
@@ -107,20 +102,20 @@ function App() {
           else { 
             if(val.login === true){ 
               return ( 
-                <HashRouter key={key}>
+                <Connection.Provider value={{auth, setauth}}>
+                  <BrowserRouter key={key}>
                   <Auth/>
-                </HashRouter>
+                </BrowserRouter>
+                </Connection.Provider>
               )
             }
             else { 
              return ( 
-              <Connection.Provider key={key} value={{navtool, setnavtool, friends, setfriends, rand, setrand, maint, setmaint, exptime, setexptime}}>
-                <HashRouter>
-                  <Cos/>
+              <Connection.Provider key={key} value={{auth, setauth, owner, setowner, resetstate, setresetstate, allusr, setallusr}}>
+                <BrowserRouter>
                   <Topnav/>
-                  <Leftnav/>
                   <Routing/>
-                </HashRouter>
+                </BrowserRouter>
             </Connection.Provider>
              )
             }

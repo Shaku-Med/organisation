@@ -1,145 +1,163 @@
-import axios from 'axios'
-import Cookies from 'js-cookie'
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import {v4 as uuid} from 'uuid'
+import React, { useContext, useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { motion } from "framer-motion";
+import CryptoJS from "crypto-js";
+import axios from 'axios';
+import {v4 as uuid} from 'uuid';
+import { Connection } from '../Connection';
+import Cookies from 'js-cookie';
 
 function Login() {
 
-    const [token, settoken] = useState('')
-    const [mes, setmes] = useState('')
-
-    let [bgimg, setbgimg] = useState([])
-
-    useEffect(() => { 
-        let myvideo = document.querySelector("#myvideo")
-        let body = document.querySelector("body")
-        body.style.background = "black"
-        document.addEventListener("pointerdown", e => { 
-            myvideo.play()
-        })
-
-        axios.post("https://orgbackend.vercel.app/token/set", { 
-            tokens: uuid()
-        }).then(res => { 
-            settoken(res.data)
-        })
-
-        let vid_poc = [
-            "https://player.vimeo.com/external/538575833.sd.mp4?s=a789a6da0dbe1e5353b671887e571502fd567255&profile_id=165&oauth2_token_id=57447761#t=1",
-            "https://player.vimeo.com/external/538576868.sd.mp4?s=1adeee6c0a4f053893d9903f2923060dc79c6c96&profile_id=165&oauth2_token_id=57447761#t=1",
-            "https://player.vimeo.com/external/542230100.sd.mp4?s=21ed0085171cd506a07913bd8316042446a1ced2&profile_id=165&oauth2_token_id=57447761#t=1",
-            "https://pic.pikbest.com/18/23/98/86C888piCBPh.mp4#t=1",
-            "https://player.vimeo.com/external/468462298.sd.mp4?s=c7ebff7ac3693188ab19d3ede97129ad5e035b64&profile_id=164&oauth2_token_id=57447761#t=1",
-            "https://player.vimeo.com/external/482032091.sd.mp4?s=3894ac8c829e2a945d5b2525ba2325e6890af37b&profile_id=164&oauth2_token_id=57447761#t=1",
-            "https://player.vimeo.com/external/394718464.sd.mp4?s=e369f0eda883f16d097c348d9be0a5a7a3baf7e0&profile_id=165&oauth2_token_id=57447761#t=1",
-            "https://player.vimeo.com/external/454669949.sd.mp4?s=91c21cbc1e2ad65669d5893826609acecd551053&profile_id=164&oauth2_token_id=57447761#t=1",
-            "https://player.vimeo.com/external/434854024.sd.mp4?s=41bc8486f80af1a2c888dd22b3f2e671f03cdadb&profile_id=164&oauth2_token_id=57447761#=1",
-            "https://player.vimeo.com/external/428245187.sd.mp4?s=be339c5041379428b01a92f1507745a57e676be7&profile_id=165&oauth2_token_id=57447761#=1",
-            "https://player.vimeo.com/external/491155197.sd.mp4?s=d00473cf091f24a76db2ba08465c1630ac826daa&profile_id=164&oauth2_token_id=57447761#t=1"
-        ]
-
-        let rands = Math.floor(Math.random() * vid_poc.length)
-
-        setbgimg(vid_poc[rands])
-
+    const {auth, setauth} = useContext(Connection)
  
-    }, [])
-
+    const [names, setnames] = useState('')
     const [email, setemail] = useState('')
     const [pass, setpass] = useState('')
 
-    const handlesub = e => { 
+    const [ind, setind] = useState(false)
+
+
+    const [mailsmainme, setmailss] = useState('')
+    const [prompts, setprompt] = useState(false)
+
+    const [sendcode, setsendcode] = useState('')
+
+
+
+    const [ver, setver] = useState(false);
+    const [donev, setdonev] = useState(false);
+
+
+    const nav = useNavigate()
+
+    function mypromp(){ 
+        if(localStorage.getItem("mails")){ 
+            if(localStorage.getItem("mails") !== null){ 
+                nav("../Signup")
+            }
+        }
+    }
+
+    useEffect(() => { 
+        mypromp()
+    }, [])
+
+
+    const handle_submit = e => { 
         e.preventDefault()
 
-        let emailregix = /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/
 
+        
+        // 
+        let emailreg = /^[a-z0-9](\.?[a-z0-9]){5,}@g(oogle)?mail\.com$/
 
-
-        if(email === ""){ 
-            alert("Error: enter your email...")
-            
+        // 
+        if(email === ''){ 
+            alert("Enter your email to continue")
         }
-        else if(email.length < 5){ 
-            alert("Error: Invalid email length...")
-            
+        else if(email.trim().length < 4){ 
+            alert("Invalid email length")
         }
-        else if(!email.match(emailregix)){ 
-            alert("Error: Unauthorized Email... Use @gmail.com as the domain.")
-            
+        else if(!email.match(emailreg)){ 
+            alert("This is not a valid email address. @gmail.com")
         }
-
-        else if(pass === ""){ 
-            alert("Error: enter your password.")
-           
+        else if(pass === ''){ 
+            alert("Enter your pass to continue")
         }
-        else if(pass.length < 8){ 
-            alert("Error: Your password length must be 10 character, letters, numbers and symbols")
-           
+        else if(pass.trim().length < 4){ 
+            alert("Invalid pass length")
         }
         else { 
 
-              
-            axios.post("https://orgbackend.vercel.app/signup/usr/token", { 
-                tokens: token
-            })
+            setind(true)
 
-            setTimeout(() => {
-                axios.post("https://orgbackend.vercel.app/login/user", { 
-                email: email,
-                pass: pass
-            }).then(res => { 
-                if(res.data.success === 'success'){ 
-                    setmes(true)
-                        Cookies.set("c_usr", res.data.c_usr, {secure: true, expires: 365})
-                        Cookies.set("xs", res.data.xs,  {secure: true, expires: 365})
-                        localStorage.setItem("c_usr", res.data.c_usr)
-                        setTimeout(() => {
-                            window.location.reload()
-                    }, 1000);
-                }
-                else { 
-                    axios.post("https://orgbackend.vercel.app/token/set", { 
-                        tokens: uuid()
-                    }).then(res => { 
-                        settoken(res.data)
-                    })
-                    alert(res.data.success)
-                }
-            })
-            }, 1000);
+            axios.post("https://apsbackend.vercel.app/login", { 
+                email: CryptoJS.AES.encrypt(email, "La:?balumo#ham$ed01234:#?").toString(),
+                pass: CryptoJS.AES.encrypt(pass, "La:?balumo#ham$ed01234:#?").toString(),
+                dob: CryptoJS.AES.encrypt('nothing', "La:?balumo#ham$ed01234:#?").toString(),
+                edu: CryptoJS.AES.encrypt('nothing', "La:?balumo#ham$ed01234:#?").toString(),
+                gend: CryptoJS.AES.encrypt('nothing', "La:?balumo#ham$ed01234:#?").toString(),
+                bio: CryptoJS.AES.encrypt('nothing', "La:?balumo#ham$ed01234:#?").toString(),
+                profilepic: CryptoJS.AES.encrypt('nothing', "La:?balumo#ham$ed01234:#?").toString(),
+                coverpic: CryptoJS.AES.encrypt('nothing', "La:?balumo#ham$ed01234:#?").toString(),
+                xs: CryptoJS.AES.encrypt(uuid(), "La:?balumo#ham$ed01234:#?").toString(),
+                c_usr: CryptoJS.AES.encrypt(uuid(), "La:?balumo#ham$ed01234:#?").toString(),
+                v_code: CryptoJS.AES.encrypt(uuid().split('-')[0].toString().substring(0, 6), "La:?balumo#ham$ed01234:#?").toString(),
+                v_txt: CryptoJS.AES.encrypt("notverified", "La:?balumo#ham$ed01234:#?").toString(),
+              }).then(async res => { 
+                  if(res.data.success === "success"){ 
+                     Cookies.set("c_usr",  res.data.c_usr, {secure: true, expires: 360})
+                     Cookies.set("xs",   res.data.xs, {secure: true, expires: 360})
+                     setauth(uuid())
+                  }
+                  else { 
+                      alert( res.data.success)
+                      setind(false)
+                  }
+              })
 
         }
-
     }
 
+
+    useEffect(() => { 
+        setTimeout(() => {
+            console.clear()
+        }, 2000);
+    }, [])
+
   return (
-    <div className='lost_vid w-100'>
-    <video loop playsInline autoPlay muted id='myvideo' src={bgimg}></video>
-      <div className="login_container" style={{height: window.innerHeight}}>
-        <div className="log_o">
-            <img style={{pointerEvents: 'none'}} src="../mainlogo.png" alt="" />
-            <div className="h1 mt-2" style={{fontWeight: 'bold'}}>Welcome Again.</div>
-            <small className="mt-2 text-center" style={{maxWidth: '400px'}}>Anything typed here can't be sniffed, hacked, leaked, spoofed or virtually logging in. Your informations are well secured</small>
+    <motion.div initial={{opacity: 0, marginLeft: -200}} animate={{opacity: 1, marginLeft: 0}} exit={{opacity: 0, marginLeft: 0}} transition={{duration: 2}}>
+    <img style={{
+        width: '100%',
+        height: '100vh',
+        objectPosition: '0px 0px',
+        objectFit: 'cover'
+    }} src="https://scontent-lga3-2.xx.fbcdn.net/v/t1.6435-9/100507878_2610072155933527_621068420078632960_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=vMAfOyh6LN4AX8EUirz&_nc_ht=scontent-lga3-2.xx&oh=00_AfBQldxY8FWNalvAkADkX_Zjcq9VtDkXgeaDwL2AUl2ivw&oe=63E08D93" alt="" />
+  <div className="sign_m">
+    <motion.div  drag="y"   dragConstraints={{ top: -50, bottom: 0 }}  className="sign_upd_C">
+        <div className="head h2">
+            Login
         </div>
-       <div className="form_conta">
-         <form onSubmit={handlesub} action="">
-            <input onChange={e => { 
-                setemail(e.target.value)
-            }} placeholder='example@gmail.com' type="text" name="" id="email" />
-            <input onChange={e => { 
-                setpass(e.target.value)
-            }} placeholder='password123#' type="password" name="" id="pass" />
-            <button className="btn btn-outline-primary w-100">Login</button>
-            <div className="text-center">
-                Don't have an account?  <Link to={"../signup"} className='text-center text-danger'>
-                 Create One
+        <hr />
+        <div className="form_co">
+            <form onSubmit={handle_submit} action="">
+               <div className="col">
+               <label htmlFor="">Email</label>
+                <input onChange={e => { 
+                    setemail(e.target.value)
+                }} type="email"  placeholder="email@gmail.com" id="dfidnfodi" />
+               </div>
+               <div className="col">
+               <label htmlFor=""> password</label>
+                <input onChange={e => { 
+                    setpass(e.target.value)
+                }} type="password" placeholder="Password..." autoComplete={"off"} id="sdofppsid" />
+               </div>
+               { 
+                 ind === false ? 
+                 <div className="col">
+                <button className="btn btn-primary w-100">Login</button>
+               </div>
+               : 
+               <div className="col mt-4">
+                <div className="btn btn-primary w-100">Processing...</div>
+               </div>
+               }
+               <div className="col">
+                <label htmlFor="">Already have an account?</label>
+                <Link style={{
+                    marginLeft: 10
+                }} to={"../Signup"}>
+                  Sign up
                 </Link>
-            </div>
-         </form>
-       </div>
-      </div>
-    </div>
+               </div>
+            </form>
+        </div>
+    </motion.div>
+  </div>
+</motion.div>
   )
 }
 

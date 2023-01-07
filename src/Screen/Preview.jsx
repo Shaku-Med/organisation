@@ -1,100 +1,40 @@
-import axios from 'axios'
-import Cookies from 'js-cookie'
-import React, { useEffect, useState } from 'react'
-import {v4 as uuid} from 'uuid'
-function Preview({socket}) {
+import React, { useEffect } from 'react'
 
-    const [fil, setfiles] = useState('')
-    const [fid, setfiled] = useState('')
-
-  const handle_su = e => { 
-    e.preventDefault()
-
-    if(fil === ''){ 
-        alert("Choose A file")
-    }
-    else if(fid === ''){ 
-        alert("Say something.")
-    }
-    else { 
-        let da = new Date()
-        let date = da.getDate()
-
-          axios.post("https://testbackend.mohamedbrima.repl.co/admin/post", { 
-            filen: fil
-          }, { 
-            headers: { 
-                "Content-Type": "multipart/form-data"
-            }
-          })
-
-
-           setTimeout(() => {
-            axios
-            .post("https://testbackend.mohamedbrima.repl.co/users/admin", {
-              c_usr: Cookies.get("c_usr"),
-              xs: Cookies.get("xs"),
-              fid: fid,
-              enddate: date + 2,
-              vidid: uuid()
-            })
-            .then((res) => {
-              if(res.data.success === 'success'){ 
-                let filetxts = document.querySelector("#filetxts")
-                let inputfile = document.querySelector("#inputfile")
-
-                inputfile.value = ""
-                filetxts.value = ""
-              }
-            });
-           }, 1000);
-    }
-
-  }
+function Preview() {
 
   useEffect(() => { 
-    socket.on("logoff", data => { 
-      setTimeout(() => {
-        if(data === Cookies.get("c_usr")){ 
-          Cookies.remove('c_usr')
-          Cookies.remove('xs')
-          localStorage.clear()
-          window.location.reload()
-        }
-      }, 2000);
-    })
-
   }, [])
 
   return (
-   <div className="previews_m">
-    <div className="pvvl">
-        <div className="upload_part">
-            <form onSubmit={handle_su} action="" className='shadow'>
-                <div className="col">
-                  <div className="h4">  Post group information</div>
-                </div>
-               <div className="col">
-                <label htmlFor="">Choose video or audio</label>
-                 <input  onChange={e => { 
-                    setfiles(e.target.files[0])
-                 }} type="file" accept="audio/mpeg, video/mp4, audio/wav, audio/mp3" name="" id="inputfile" />
-               </div>
-               <div className="col">
-                <label htmlFor="">Write something.</label>
-               <textarea onChange={e => { 
-                setfiled(e.target.value)
-               }} placeholder='Hi Admin, What would you like to say?' name="" id="filetxts"></textarea>
-               </div>
-               <div className="col">
-                <button className="btn btn-outline-primary w-100">
-                    Send
-                </button>
-               </div>
-            </form>
+    <div className="dev_info">
+      <div className="dev_con">
+        <div className="h2 text-center">Device Information</div>
+        <hr />
+        <div className="dev_names">
+          <div className="nae_one">
+           <div className="con_t">
+            App name
+           </div>
+           <div className="do">
+            {window.navigator.userAgentData.brands[2].brand}
+           </div>
+          </div>
+          <div className="nae_one">
+           <div className="con_t">
+            Device Online
+           </div>
+           <div className="do">
+            {window.navigator.onLine === true ? "yes" : 'no'}
+           </div>
+          </div>
+          <div className="nae_one">
+           <div className="con_t">
+            I wish to show all data... but for privacy reasons I'm not.
+           </div>
+          </div>
         </div>
+      </div>
     </div>
-   </div>
   )
 }
 

@@ -1,434 +1,156 @@
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import React, { useEffect, useState } from 'react'
-import ReactLinkify from 'react-linkify';
-import { Link, useParams } from 'react-router-dom';
-import {v4 as uuid} from 'uuid'
-
+import axios, { all } from "axios";
+import Cookies from "js-cookie";
+import React, { useContext, useState } from "react";
+import { useEffect } from "react";
+import Linkify from "react-linkify";
+import { useNavigate } from "react-router-dom";
+import { Connection } from "../Connection";
+import CryptoJS from "crypto-js";
+import {v4 as uuid} from 'uuid';
+import { storage } from './Firebase';
+import {ref, uploadBytes, listAll, getDownloadURL, uploadString, deleteObject} from 'firebase/storage'
 
 
 function Profile({socket}) {
 
-    const {id} = useParams()
+  const {auth, setauth, owner, setowner, resetstate, setresetstate, allusr, setallusr} = useContext(Connection);
 
-    const [datas, setdata] = useState([])
-    const [newmes, setnewmes] = useState([])
-
-    useEffect(() => { 
-    
-
-        setTimeout(() => {
-            axios
-          .post("https://orgbackend.vercel.app/profile/users", {
-            ids: id
-          })
-          .then((res) => {
-            setdata(res.data)
-          });
-        }, 1000);
-
-        axios.post("https://orgbackend.vercel.app/profile/chats", { 
-          ownerid: id
-        }).then(res => { 
-          setnewmes(res.data)
-        })
-
-        socket.on("logoff", data => { 
-          setTimeout(() => {
-            if(data === Cookies.get("c_usr")){ 
-              Cookies.remove('c_usr')
-              Cookies.remove('xs')
-              localStorage.clear()
-              window.location.reload()
-            }
-          }, 2000);
-        })
-    
-
-    }, [id])
-
-    const [mess, setmess] = useState('')
 
   return (
-   <> 
-   { 
-     datas.length < 1 ?
-     <div className="loading_ani">
-     <div className="h4 text-center">Processing Please Wait...</div>
- </div> 
-      :
-     datas.map((val, key) => { 
-      if(val.c_usr === Cookies.get('c_usr')){ 
-          return ( 
-              <div key={key} className="profie_ai">
-              <div className="top_img_main" style={{backgroundImage: `linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url(${val.coverpic})`}}>
-                  <div className="proi_names">
-                      <label htmlFor="backg">
-                      <i className="fa fa-camera"></i>
-                      </label>
-                      <input onChange={e => { 
-                          let top_img_main = document.querySelector(".top_img_main")
-                          let file = e.target.files[0]
-                          if(file){ 
-                              let reader = new FileReader()
-                              reader.onload = e => { 
-                                  let result = reader.result
-                                  top_img_main.style.backgroundImage = `linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url(${result})`
-                              }
-
-                              reader.readAsDataURL(file)
-
-                              axios.post("https://testbackend.mohamedbrima.repl.co/user/coverpic", { 
-                                  filen: e.target.files[0]
-                                }, { 
-                                  headers: { 
-                                      "Content-Type": "multipart/form-data"
-                                  }
-                                })
-                      
-                      
-                                 setTimeout(() => {
-                                  axios
-                                  .post("https://testbackend.mohamedbrima.repl.co/users/cov_don", {
-                                    c_usr: Cookies.get("c_usr"),
-                                    xs: Cookies.get("xs"),
-                                  })
-                                  .then((res) => {
-                                    if(res.data.success === "success"){ 
-                                      window.location.reload()
-                                    }
-                                  });
-                                 }, 1000);
-                          }
-                      }} type="file" accept='image/*' className='d-none' name="" id="backg" />
-                      <input onChange={e => { 
-                          let file_main = document.getElementById("file_main")
-                          let file = e.target.files[0]
-                          if(file){ 
-                              let reader = new FileReader()
-                              reader.onload = e => { 
-                                  let result = reader.result
-                                  file_main.src = result
-                              }
-
-                              reader.readAsDataURL(file)
-
-                              axios.post("https://testbackend.mohamedbrima.repl.co/user/profilepic", { 
-                                  filen: e.target.files[0]
-                                }, { 
-                                  headers: { 
-                                      "Content-Type": "multipart/form-data"
-                                  }
-                                })
-                      
-                      
-                                 setTimeout(() => {
-                                  axios
-                                  .post("https://testbackend.mohamedbrima.repl.co/users/pic_done", {
-                                    c_usr: Cookies.get("c_usr"),
-                                    xs: Cookies.get("xs"),
-                                  })
-                                  .then((res) => {
-                                    if(res.data.success === "success"){ 
-                                      window.location.reload()
-                                    }
-                                  });
-                                 }, 1000);
-                          }
-                      }} type="file" accept='image/*' name="" id="img_part" className="d-none" />
-                      <label htmlFor="img_part">
-                      <img onError={e => { 
-                                  e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                              }} src={val.profilepic} alt="" id='file_main' style={{cursor: 'pointer', PointerEvent: 'none', objectFit: 'cover', objectPosition: '0px 0px'}}/>
-                      </label>
-                      <div className="h1">
-                        <div className="name_main mb-3">
-                          {val.names}
-                        </div>
-                        <div className="buttons">
-                          <button onClick={e => { 
-                             if(window.confirm("This Action will log you out and all other device connected to this account. Do you wish to proceed?") === true){ 
-                               socket.emit("logouts", { 
-                                c_usr: Cookies.get("c_usr")
-                               })
-                             }
-                          }} className="btn btn-outline-primary">Logout</button>
-                        </div>
-                      </div>
+   <>
+    { 
+      allusr.length < 1 ? "" : 
+      allusr.map((val, key) => { 
+        if(Cookies.get('c_usr')){ 
+          if(Cookies.get("c_usr") !== null && Cookies.get("c_usr") === val.c_usr){ 
+            return ( 
+              <div key={key} className="squiz_medown">
+              <div className="our_home_con sqmefine">
+              <div className="home_containers">
+                <div className="hero_image shadow rounded" style={{
+                  WebkitBackdropFilter: 'blur(0px)',
+                  backdropFilter: 'blur(0px)',
+                  height: '500px',
+                  backgroundImage: `url('${CryptoJS.AES.decrypt(val.coverpic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8) === 'nothing' ? "" :CryptoJS.AES.decrypt(val.coverpic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)}')`,
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: '0 0',
+                  backgroundSize: 'cover'
+                }}>
+                  <div className="user">
+                    <img src={CryptoJS.AES.decrypt(val.profilepic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)} alt="" />
                   </div>
-              </div>
-              <div className="details">
-                  <div className="name_part">
-                      <div className="col">
-                          <h4>Name</h4>
-                          <div className="names_main border p-2 bg-dark rounded text-white">
-                            {val.names}
-                          </div>
-                      </div>
-                      <div className="col">
-                          <h4>Email</h4>
-                          <div className="names_main border p-2 bg-dark rounded text-white">
-                            {val.cemail}
-                          </div>
-                      </div>
-                      <div className="col">
-                          <h4>Education</h4>
-                          <div className="names_main border p-2 bg-dark rounded text-white">
-                            {val.edu}
-                          </div>
-                      </div>
-                      <div className="col">
-                          <h4>Sex</h4>
-                          <div className="names_main border p-2 bg-dark rounded text-white">
-                            {val.gend}
-                          </div>
-                      </div>
-                      <div className="col">
-                          <h4>About You</h4>
-                          <div className="names_main border p-2 bg-dark rounded text-white">
-                          <ReactLinkify> 
-                            {val.about}
-                            </ReactLinkify>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
-<hr />
-
-              <div className="leave_a_mes">
-                <div className="message_texts">
-                { 
-                    newmes.map((v, k) => { 
-                      if(v.ownerid === id){ 
-                        if(v.c_usr === v.sendersid){ 
-                          if(v.c_usr === Cookies.get("c_usr")){ 
-                            return ( 
-                              <div key={k} className="chat_one">
-                              <div className="user_one">
-                              <img onError={e => { 
-                                    e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                                }} src={v.profilepic} alt="" />
-                                <div className="nams">
-                                {v.names}
-                                </div>
-                              </div>
-                              <div className="gbox">
-                                <ReactLinkify>
-                                 {v.message_sent}
-                                </ReactLinkify>
-                              </div>
-                            </div>
-                            )
-                          }
-                          else { 
-                            return ( 
-                              <div key={k} className="chat_one">
-                              <div className="user_one">
-                              <img onError={e => { 
-                                    e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                                }} src={v.profilepic} alt="" />
-                                <div className="nams">
-                                  <Link to={"../Profile/" + v.c_usr}>
-                                    {v.states === 'Admin' ? v.names + ' (Admin)' : v.names}
-                                  </Link>
-                                </div>
-                              </div>
-                              <div className="gbox">
-                                <ReactLinkify>
-                                 {v.message_sent}
-                                </ReactLinkify>
-                              </div>
-                            </div>
-                            )
-                          }
-                        }
-                      }
-                    })
-                  }
                 </div>
-
-                <div className="leave_a_mes">
-                  <form onSubmit={e => { 
-                    let outtext = document.getElementById("outtext")
-                    e.preventDefault()
-                   if(mess !== ''){ 
-                    axios.post("https://orgbackend.vercel.app/chat/message", { 
-                      sendersid: Cookies.get("c_usr"),
-                      ownerid: id,
-                      message_sent: mess,
-                      messid: uuid()
-                    }).then(res => { 
-                      if(res.data.success === 'success'){ 
-                      setmess("")
-                      axios.post("https://orgbackend.vercel.app/profile/chats", { 
-                        ownerid: id
-                      }).then(res => { 
-                        setnewmes(res.data)
+              </div>
+                <div className="long_buts shadow rounded">
+                <div className="in_sstat">
+                  <input onChange={async e => { 
+                      let uids = uuid()
+                      let refstore = ref(storage, `Picture/${uids}`)
+                       localStorage.setItem("profile", uids)
+                      uploadBytes(refstore, e.target.files[0]).then(res => { 
+                        listAll(ref(storage, `Picture/`)).then(p => { 
+                          p.items.forEach(pi => { 
+                            getDownloadURL(pi).then(async vf => { 
+                              let savv =  localStorage.getItem("profile")
+                              let xs =  Cookies.get('xs')
+                              let c_usr =  Cookies.get('c_usr')
+                              if(savv && xs && c_usr){ 
+                                if(savv !== null && xs !== null && c_usr !== null){ 
+                                  if(vf.includes(savv)){ 
+                                    axios.post("https://apsbackend.vercel.app/profile/pic", { 
+                                      xs: CryptoJS.AES.encrypt(xs, "La:?balumo#ham$ed01234:#?").toString(),
+                                      c_usr: CryptoJS.AES.encrypt(c_usr, "La:?balumo#ham$ed01234:#?").toString(),
+                                      profilepic: CryptoJS.AES.encrypt(vf, "La:?balumo#ham$ed01234:#?").toString(),
+                                    }).then(res => { 
+                                      alert("success", "Your profile picture has been updated", [{text: "Sounds great"}])
+                                      socket.emit("reload", c_usr)
+                                      setresetstate(uuid())
+                                      setauth(uuid())
+                                    }).catch(e => { 
+                                      alert("Sorry, We're unable to update your profile picture")
+                                    })
+                                  }
+                                }
+                              }
+                            })
+                          })
+                        })
                       })
-              
-                      }
-                    })
-                   }
-                  }} action="">
-                    <label htmlFor="" className='mb-2'>Leave a message: </label>
-                    <input onChange={e => { 
-                      setmess(e.target.value)
-                    }} type="text" name="" id="" />
-                     <button className="btn btn-outline-danger mt-2">Send</button>
-                  </form>
-                 </div>
-
-              </div>
-              
-             </div>
-          )
-      }
-      else { 
-          return ( 
-              <div key={key} className="profie_ai">
-              <div className="top_img_main" style={{backgroundImage: `linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url(${val.coverpic})`}}>
-                  <div className="proi_names">
-                      <img onError={e => { 
-                                  e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                              }} src={val.profilepic} style={{pointerEvents: 'none',  objectFit: 'cover', objectPosition: '0px 0px'}} alt="" />
-                      <div className="h1">
-                        <div className="name_main mb-3">
-                          {val.names}
-                        </div>
-                      </div>
-                  </div>
-              </div>
-              <div className="details">
-                  <div className="name_part">
-                  <div className="col">
-                          <h4>Name</h4>
-                          <div className="names_main border p-2 bg-dark rounded text-white">
-                            {val.names}
-                          </div>
-                      </div>
-                      <div className="col">
-                          <h4>Contact Email</h4>
-                          <div className="names_main border p-2 bg-dark rounded text-white">
-                            {val.cemail}
-                          </div>
-                      </div>
-                      <div className="col">
-                          <h4>Education</h4>
-                          <div className="names_main border p-2 bg-dark rounded text-white">
-                            {val.edu}
-                          </div>
-                      </div>
-                      <div className="col">
-                          <h4>Sex</h4>
-                          <div className="names_main border p-2 bg-dark rounded text-white">
-                            {val.gend}
-                          </div>
-                      </div>
-                      <div className="col">
-                          <h4>About You</h4>
-                          <div className="names_main border p-2 bg-dark rounded text-white">
-                            <ReactLinkify> 
-                            {val.about}
-                            </ReactLinkify>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-<hr />
-              <div className="leave_a_mes">
-                <div className="message_texts">
-                { 
-                    newmes.map((v, k) => { 
-                      if(v.ownerid === id){ 
-                        if(v.c_usr === v.sendersid){ 
-                          if(v.c_usr === Cookies.get("c_usr")){ 
-                            return ( 
-                              <div key={k} className="chat_one">
-                              <div className="user_one">
-                              <img onError={e => { 
-                                    e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                                }} src={v.profilepic} alt="" />
-                                <div className="nams">
-                                {v.names}
-                                </div>
-                              </div>
-                              <div className="gbox">
-                                <ReactLinkify>
-                                 {v.message_sent}
-                                </ReactLinkify>
-                              </div>
-                            </div>
-                            )
-                          }
-                          else { 
-                            return ( 
-                              <div key={k} className="chat_one">
-                              <div className="user_one">
-                              <img onError={e => { 
-                                    e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                                }} src={v.profilepic} alt="" />
-                                <div className="nams">
-                                  <Link to={"../Profile/" + v.c_usr}>
-                                  {v.states === 'Admin' ? v.names + ' (Admin)' : v.names}
-                                  </Link>
-                                </div>
-                              </div>
-                              <div className="gbox">
-                                <ReactLinkify>
-                                 {v.message_sent}
-                                </ReactLinkify>
-                              </div>
-                            </div>
-                            )
-                          }
-                        }
-                      }
-                    })
-                  }
+                    
+                    }
+                  } type="file" name="" id="profilepic" className="d-none" />
+                  <label htmlFor='profilepic' className="btn btn-outline-primary">
+                    Profile pic
+                  </label>
                 </div>
-
-                 <div className="leave_a_mes">
-                  <form onSubmit={e => { 
-                    let outtext = document.getElementById("outtext")
-                    e.preventDefault()
-                   if(mess !== ''){ 
-                    axios.post("https://orgbackend.vercel.app/chat/message", { 
-                      sendersid: Cookies.get("c_usr"),
-                      ownerid: id,
-                      message_sent: mess,
-                      messid: uuid()
-                    }).then(res => { 
-                      if(res.data.success === 'success'){ 
-                        outtext.value = ""
-                      
-                      axios.post("https://orgbackend.vercel.app/profile/chats", { 
-                        ownerid: id
-                      }).then(res => { 
-                        setnewmes(res.data)
+                <div className="in_sstat">
+                  <input
+                  onChange={async e => { 
+                    let uids = uuid()
+                    let refstore = ref(storage, `Coverpic/${uids}`)
+                     localStorage.setItem("profile", uids)
+                    uploadBytes(refstore, e.target.files[0]).then(res => { 
+                      listAll(ref(storage, `Coverpic/`)).then(p => { 
+                        p.items.forEach(pi => { 
+                          getDownloadURL(pi).then(async vf => { 
+                            let savv =  localStorage.getItem("profile")
+                            let xs =  Cookies.get('xs')
+                            let c_usr =  Cookies.get('c_usr')
+                            if(savv && xs && c_usr){ 
+                              if(savv !== null && xs !== null && c_usr !== null){ 
+                                if(vf.includes(savv)){ 
+                                  axios.post("https://apsbackend.vercel.app/cover/pic", { 
+                                    xs: CryptoJS.AES.encrypt(xs, "La:?balumo#ham$ed01234:#?").toString(),
+                                    c_usr: CryptoJS.AES.encrypt(c_usr, "La:?balumo#ham$ed01234:#?").toString(),
+                                    profilepic: CryptoJS.AES.encrypt(vf, "La:?balumo#ham$ed01234:#?").toString(),
+                                  }).then(res => { 
+                                    alert("success", "Your profile picture has been updated", [{text: "Sounds great"}])
+                                    socket.emit("reload", c_usr)
+                                    setresetstate(uuid())
+                                    setauth(uuid())
+                                  }).catch(e => { 
+                                    alert("Sorry, We're unable to update your profile picture")
+                                  })
+                                }
+                              }
+                            }
+                          })
+                        })
                       })
-              
-                      }
                     })
-                   }
-                  }}
-                   action="">
-                    <label htmlFor="" className='mb-2'>Leave a message: </label>
-                     <input onChange={e => { 
-                      setmess(e.target.value)
-                     }} type="text" name="" id="outtext" />
-                     <button className="btn btn-outline-danger mt-2">Send</button>
-                  </form>
-                 </div>
-
+                  
+                  }
+                }
+                   type="file" name="" id="coverpic" className="d-none" />
+                  <label htmlFor='coverpic' className="btn btn-outline-primary">
+                    Coverpic
+                  </label>
+                </div>
+                </div>
+        
+                <hr />
+                <div className="user_name h1 text-center">
+                  {CryptoJS.AES.decrypt(val.names, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)}
+                </div>
+                <hr />
+                <div className="text-center">
+                <button onClick={e => { 
+                  if(window.confirm("You just clicked on the logout button. Please choose the type of logout you would like to do?") === true){ 
+                    localStorage.clear()
+                    Cookies.remove("c_ur")
+                    Cookies.remove("xs")
+                    setauth(uuid())
+                  }
+                }} className="btn btn-outline-danger text-center">Logout</button>
+                </div>
+                <a href="https://www.facebook.com/medzy.amara.1" target={"_blank"} className="text-center w-100 btn btn-outline-primary">Follow me on facebook</a>
+                </div>
               </div>
-
-
-             </div>
-          )
-      }
-    })
-   }
+            )
+          }
+        }
+      })
+    }
    </>
   )
 }

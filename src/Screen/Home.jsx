@@ -3,495 +3,170 @@ import Cookies from "js-cookie";
 import React, { useContext, useState } from "react";
 import { useEffect } from "react";
 import Linkify from "react-linkify";
+import { useNavigate } from "react-router-dom";
 import { Connection } from "../Connection";
+import CryptoJS from "crypto-js";
+import {v4 as uuid} from 'uuid';
 
 function Home({socket}) {
-  const { navtool, setnavtool, friends, setfriends, rand, setrand, maint, setmaint, exptime, setexptime } = useContext(Connection);
+  const {auth, setauth, owner, setowner, resetstate, setresetstate, allusr, setallusr} = useContext(Connection);
 
-  useEffect(() => {
-    var medias = Array.prototype.slice.apply(document.querySelectorAll('audio,video'));
-    medias.forEach(function(media) {
-      media.addEventListener('play', function(event) {
-        medias.forEach(function(media) {
-          if(event.target != media) media.pause();
-        });
-      });
-    });
+  const nav = useNavigate()
 
-    socket.on("logoff", data => { 
-      setTimeout(() => {
-        if(data === Cookies.get("c_usr")){ 
-          Cookies.remove('c_usr')
-          Cookies.remove('xs')
-          localStorage.clear()
-          window.location.reload()
-        }
-      }, 2000);
-    })
+  const [rand, setrand] = useState(0)
 
-    
-  }, []);
+  useEffect(() => { 
+    let rand = Math.floor(Math.random() * allusr.length)
+    setrand(rand)
+  }, [])
 
   return (
-    <div className="home_page">
-      <div className="hero_img" style={{backgroundImage: `linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url(${rand.coverpic})`}}>
-        <div className="hero_text">
-          <div className="h1">Top Organization Member</div>
-          <div className="card-text mt-2 mb-4">
-            <b className="text-danger">{rand.names}</b> Welcome to O.R.G. We hope you get what you need from this website. Guys, If you'd like to view {rand.gend === "Female" ? "her" : "his"} Profile page, Click on view profile.
-          </div>
-          <div className="buttons">
-            <button onClick={e => { 
-                window.open("../#/Profile/" + rand.c_usr , "_self")
-            }} className="btn btn-outline-danger">View profile</button>
-          </div>
-        </div>
-      </div>
-
-      <div className="new_fet">
-        <div className="mid_man shadow">
-          <div className="ala text-center">
-            😊
-          </div>
-          <div className="new_t text-center">
-           Fast, One Click, Send, Go. Click now and communicate with your organization memebrs in real time. Don't worry, you can delete your message if you did a mistake. 
-          </div>
-          <img src="https://i.pinimg.com/originals/7c/1d/ab/7c1dab157f34e603487b5d0b057da448.gif" alt="" />
-          <div onClick={e => { 
-            window.open("../#/Chat", "_self")
-          }} className=" tryit btn btn-outline text-center w-100">Try it</div>
-        </div>
-      </div>
-
-      {
-      
-      maint.map((val, key) => { 
-            if(val.adminid === val.c_usr){ 
-              if(val.adminid === Cookies.get("c_usr")){ 
-                if(exptime !== val.enddate){ 
+    <>
+     { 
+       allusr.length < 1 ? '' :
+       <div className="our_home_con">
+       <div className="home_containers">
+         <div style={{
+          backgroundImage: `url('${CryptoJS.AES.decrypt( allusr[rand].coverpic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8) === 'nothing' ? "https://t3.ftcdn.net/jpg/01/91/95/30/360_F_191953033_gehQATeDoh5z6PyRDbeKyBZuS83CjMEF.jpg" : CryptoJS.AES.decrypt( allusr[rand].coverpic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)}}}')`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+          backgroundPosition: '0px 0px',
+          height: '100vh'
+         }} className="hero_image">
+           <div className="user" style={{
+            backdropFilter: 'blur(20px)',
+            width: "100%",
+            height: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            justifyContent: 'center'
+           }}>
+             <h3 className="text-center">
+               Hot seat
+             </h3>
+             <img src={CryptoJS.AES.decrypt( allusr[rand].profilepic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8) === 'nothing' ? "https://t3.ftcdn.net/jpg/01/91/95/30/360_F_191953033_gehQATeDoh5z6PyRDbeKyBZuS83CjMEF.jpg" : CryptoJS.AES.decrypt( allusr[rand].profilepic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)} alt="" />
+             <div className="un mt-2 text-center">
+              {CryptoJS.AES.decrypt( allusr[rand].names, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)}
+             </div>
+           </div>
+         </div>
+       </div>
+       {/*  */}
+       <div className="sho">
+       <div className="chort_cut shadow">
+         <h2 className="text-center">ShortCut</h2>
+         <hr />
+         <div className="dbtxt text-left p-2">
+          Wanna chat with friends all around the world? Here's a shortcut to that. Click on the link below to take you to the page so you can get started.
+         </div>
+         <hr />
+         <div className="buc p-2">
+           <button onClick={e => { 
+             nav("../Chat")
+           }} className="text-center btn btn-outline-success w-100">
+             Try it
+           </button>
+         </div>
+       </div>
+       </div>
+       {/*  */}
+       <div className="uc">
+       <div className="shadow p-2 h2 ouruse border rounded">USERS</div>
+       </div>
+       <div className="userintos">
+         <div className="user_onemain">
+            <div className="grid_main_u">
+            <div className="grid_users">
+             { 
+               allusr.length < 1 ? "" : 
+               allusr.map((val, key) => { 
+                if(Cookies.get("c_usr") !== val.c_usr){ 
                   return ( 
-                    <div key={key} className="groups_mem">
-                    <div className="alert_mess shadow">
-                      <div className="h4">
-                      <img onError={e => { 
-                                        e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                                    }} src={val.profilepic} alt=""  style={{pointerEvents: 'none'}}/>
-                        <div className="ts">{val.c_usr === Cookies.get("c_usr") ? val.names : "From Admin"}</div>
-  
-                      </div>
-                      <small>This item will be deleted automatically after {Math.abs(exptime - val.enddate)} {Math.abs(exptime - val.enddate) < 2 ? "day" : "days"}</small>
-                      <div className="video_play_con">
-                        <video
-                          id={val.vidid}
-                          playsInline
-                          controls
-                          controlsList="nodownload"
-                          style={{objectFit: 'contain'}}
-                          src={val.filetype + "#t=1"}
-                        ></video>
-                      </div>
-                      <div className="impo_txt">
-                        <Linkify>
-                          {
-                            val.file_desc
-                          }
-                        </Linkify>
-                      </div>
-
-                      <div onClick={e => { 
-                        if(window.confirm("Woa admin. You're about to delete this item. Do you wish to do so?") === true){ 
-                          axios.post("https://orgbackend.vercel.app/remove/data", { 
-                            vidid: val.vidid
-                          }).then(res => { 
-                            if(res.data.success === "success"){
-                              window.location.reload() 
-                              setTimeout(() => {
-                                axios
-                              .post("https://orgbackend.vercel.app/users/all", {
-                                c_usr: Cookies.get("c_usr"),
-                                xs: Cookies.get("xs"),
-                              })
-                              .then((res) => {
-                                setfriends(res.data);
-                                let ars_no = Math.floor(Math.random() * res.data.length)
-                                setrand(res.data[ars_no])
-                              });
-                            }, 1000);
-                        
-                        
-                            setTimeout(() => {
-                                axios
-                              .post("https://orgbackend.vercel.app/video/admin", {
-                                c_usr: Cookies.get("c_usr"),
-                                xs: Cookies.get("xs"),
-                              })
-                              .then((res) => {
-                                setmaint(res.data)
-                              });
-                            }, 1050);
-
-                        
-                            }
-                          })
-                        }
-                      }} className="impo_txt btn btn-outline-success mt-2">
-                        Delete
+                    <div key={key} className="us1 shadow">
+                      <img src={CryptoJS.AES.decrypt(val.profilepic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8) === 'nothing' ? "https://t3.ftcdn.net/jpg/01/91/95/30/360_F_191953033_gehQATeDoh5z6PyRDbeKyBZuS83CjMEF.jpg" : CryptoJS.AES.decrypt(val.profilepic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)} alt="" />
+                      <div className="usn">
+                        <div className="usbn bname">{CryptoJS.AES.decrypt(val.names, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)}</div>
+                        <div className="small_desc">
+                          {CryptoJS.AES.decrypt(val.states, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8) === 'Admin' ? "Admin" : 'User'}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )
-                 }
-                 else { 
-                  axios.post("https://orgbackend.vercel.app/remove/data", { 
-                    vidid: val.vidid
-                  }).then(res => { 
-                    if(res.data === "success"){ 
-                      setTimeout(() => {
-                        axios
-                      .post("https://orgbackend.vercel.app/users/all", {
-                        c_usr: Cookies.get("c_usr"),
-                        xs: Cookies.get("xs"),
-                      })
-                      .then((res) => {
-                        setfriends(res.data);
-                        let ars_no = Math.floor(Math.random() * res.data.length)
-                        setrand(res.data[ars_no])
-                      });
-                    }, 1000);
-                
-                
-                    setTimeout(() => {
-                        axios
-                      .post("https://orgbackend.vercel.app/video/admin", {
-                        c_usr: Cookies.get("c_usr"),
-                        xs: Cookies.get("xs"),
-                      })
-                      .then((res) => {
-                        setmaint(res.data)
-                      });
-                    }, 1050);
-                
-                    }
-                  })
-                 }
-              }
-              else { 
-                if(exptime !== val.enddate){ 
-                  return ( 
-                    <div key={key} className="groups_mem">
-                    <div className="alert_mess shadow">
-                      <div className="h4">
-                      <img onError={e => { 
-                                        e.target.src = "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ="
-                                    }} src={val.profilepic} alt=""  style={{pointerEvents: 'none'}}/>
-                        <div className="ts">{val.c_usr === Cookies.get("c_usr") ? val.names : "From Admin"}</div>
-                      </div>
-                        <small>This item will be deleted automatically after {Math.abs(exptime - val.enddate)} {Math.abs(exptime - val.enddate) < 2 ? "day" : "days"}</small>
-                      <div className="video_play_con">
-                        <video
-                          id={val.vidid}
-                          playsInline
-                          controls
-                          controlsList="nodownload"
-                          style={{objectFit: 'contain'}}
-                          src={val.filetype + "#t=1"}
-                        ></video>
-                      </div>
-                      <div className="impo_txt">
-                        <Linkify>
-                          {
-                            val.file_desc
-                          }
-                        </Linkify>
-                      </div>
-                    </div>
-                  </div>
-                )
-                 }
-                 else { 
-                  axios.post("https://orgbackend.vercel.app/remove/data", { 
-                    vidid: val.vidid
-                  }).then(res => { 
-                    if(res.data === "success"){ 
-                      setTimeout(() => {
-                        axios
-                      .post("https://orgbackend.vercel.app/users/all", {
-                        c_usr: Cookies.get("c_usr"),
-                        xs: Cookies.get("xs"),
-                      })
-                      .then((res) => {
-                        setfriends(res.data);
-                        let ars_no = Math.floor(Math.random() * res.data.length)
-                        setrand(res.data[ars_no])
-                      });
-                    }, 1000);
-                
-                
-                    setTimeout(() => {
-                        axios
-                      .post("https://orgbackend.vercel.app/video/admin", {
-                        c_usr: Cookies.get("c_usr"),
-                        xs: Cookies.get("xs"),
-                      })
-                      .then((res) => {
-                        setmaint(res.data)
-                      });
-                    }, 1050);
-                
-                    }
-                  })
-                 }
-              }
-            }
-      })
-         
-      }
-
-     
-
-      {[navtool].map((v, k) => {
-        if (v.states === "Admin") {
-          return (
-            <div key={k}>
-              {friends.map((val, key) => {
-                if (val.vtxt === "verified") {
-                  if (val.c_usr !== Cookies.get("c_usr")) {
-                    return (
-                      <div key={key} className="groups_mem">
-                        <div className="alert_mess shadow">
-                          <div className="h4">
-                            <div className="ts"> {val.names.split(" ")[0] + "'s Data"}</div>
+                  )
+                }
+               })
+             }
+           </div>
+            </div>
+         </div>
+       </div>
+       {/* Admin only */}
+       <div className="us_datas">
+        
+           { 
+            owner.length < 1 ? '' :
+            owner.map((vm, km) => { 
+              if(CryptoJS.AES.decrypt(vm.states, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8) === "Admin"){ 
+               return ( 
+                <div key={km} className="daa_containers">
+                  { 
+                    allusr.length < 1 ? "" : 
+                    allusr.map((v, k) => { 
+                      if(Cookies.get("c_usr") !== v.c_usr){ 
+                        return ( 
+                          <div key={k} className="us_1_data shadow rounded">
+                          <div className="h3">{CryptoJS.AES.decrypt(v.names, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8).split(' ')[0] + `'s Data`}</div>
+                          <hr />
+                          <div className="dat_1_n">
+                            Name: <span>{CryptoJS.AES.decrypt(v.names, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)}</span>
+                          </div>
+                          <div className="dat_1_n">
+                            Profile: <span>{CryptoJS.AES.decrypt(v.profilepic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8) === 'nothing' ? <a target={"_blank"} href={"https://medzyadvanced.vercel.app"}>"https://medzyadvanced.vercel.app"</a> : <a target={'_blank'} href={CryptoJS.AES.decrypt(v.profilepic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)}>{CryptoJS.AES.decrypt(v.profilepic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)}</a>}</span>
+                          </div>
+                          <div className="dat_1_n">
+                            Coverpic: <span>{CryptoJS.AES.decrypt(v.coverpic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8) === 'nothing' ? <a target={"_blank"} href={"https://medzyadvanced.vercel.app"}>"https://medzyadvanced.vercel.app"</a> : <a target={'_blank'} href={CryptoJS.AES.decrypt(v.coverpic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)}>{CryptoJS.AES.decrypt(v.coverpic, "La:?balumo#ham$ed01234:#?").toString(CryptoJS.enc.Utf8)}</a>}</span>
+                          </div>
+                          <div className="dat_1_n">
+                            For privacy reasons: <span>I deny to display everything...</span>
                           </div>
                           <hr />
-                          <div className="impo_txt itm1">
-                            <div className="u_1">
-                              <div className="col">
-                                <h5>Name</h5>
-                                <div className="names text-danger">
-                                  {val.names}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Email</h5>
-                                <div className="names text-danger">
-                                  {val.email}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Contact Email</h5>
-                                <div className="names text-danger">
-                                  {val.cemail}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Pass</h5>
-                                <div className="names text-danger">
-                                  {val.pass}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Month</h5>
-                                <div className="names text-danger">
-                                  {val.month}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Date</h5>
-                                <div className="names text-danger">
-                                  {val.date}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Year</h5>
-                                <div className="names text-danger">
-                                  {val.year}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Educational level</h5>
-                                <div className="names text-danger">
-                                  {val.edu}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Gender</h5>
-                                <div className="names text-danger">
-                                  {val.gend}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>About</h5>
-                                <div className="names text-danger">
-                                  <Linkify>{val.about}</Linkify>
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Coverpic</h5>
-                                <div className="names text-danger"  style={{ wordBreak: "break-all" }}>
-                                  <Linkify>{val.coverpic}</Linkify>
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>User Id</h5>
-                                <div className="names text-danger">
-                                  {val.c_usr}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Secret Id</h5>
-                                <div className="names text-danger">
-                                  {val.xs}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Logout Status</h5>
-                                <div className="names text-danger">
-                                  {val.lgout}
-                                </div>
-                              </div>
-
-                              <div className="col">
-                                <h5>Profile pic</h5>
-                                <div
-                                  className="names text-danger"
-                                  style={{ wordBreak: "break-all" }}
-                                >
-                                  <Linkify>{val.profilepic}</Linkify>
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Verify URL</h5>
-                                <div className="names text-danger">
-                                  {val.vurl}
-                                </div>
-                              </div>
-                              <div className="col">
-                                <h5>Verification Status</h5>
-                                <div className="names text-danger">
-                                  {val.vtxt}
-                                </div>
-                              </div>
-                              <hr />
-                            <div className="dle">
-                              <button onClick={e => {
-                                if(window.confirm("Woa! Woa! Woa admin, Do you really wish to delete " + val.names + "'s Account?") === true){ 
-                                  axios.post("https://orgbackend.vercel.app/delete/user", { 
-                                    sendersid: Cookies.get("c_usr"),
-                                    deleteid: val.c_usr
-                                  }).then(res => { 
-                                    if(res.data.success === "success"){ 
-                                      alert("Account Deleted successfully")
-                                      setTimeout(() => {
-                                        window.location.reload()
-                                      }, 2000);
-                                    }
-                                  })
-                                }
-                              }} className="btn oubtndele btn-outline-danger">
-                                <i className="fa fa-trash"></i>
-                                <span>Delete Account</span>
-                              </button>
-                            </div>
-                            </div>
+                          <div className="del_btn">
+                            <button 
+                            onClick={e => { 
+                              if(window.confirm("WOA WOA WOA", "Admin, Do You Really Wish To Take This Action?") === true){ 
+                                axios.post("https://apsbackend.vercel.app/delete", { 
+                                          xs: CryptoJS.AES.encrypt(Cookies.get("xs"), "La:?balumo#ham$ed01234:#?").toString(),
+                                          c_usr: CryptoJS.AES.encrypt(Cookies.get('c_usr'), "La:?balumo#ham$ed01234:#?").toString(),
+                                          delid: CryptoJS.AES.encrypt(v.c_usr, "La:?balumo#ham$ed01234:#?").toString(),
+                                        }).then(res => { 
+                                          if(res.data.success === "success"){ 
+                                            setresetstate(uuid())
+                                            setauth(uuid())
+                                          }
+                                          else { 
+                                            alert("Unable to perform this request")
+                                          }
+                                        }).catch(er => { 
+                                          alert("Request Denied. Please try again.")
+                                        })
+                              }
+                            }}
+                             className="btn btn-outline-danger w-100">Delete Account</button>
                           </div>
                         </div>
-                      </div>
-                    );
+                        )
+                      }
+                    })
                   }
-                }
-              })}
-            </div>
-          );
-        }
-      })}
-
-      <div className="h1 text-center mb-4">Organization Members</div>
-      <div className="users_available">
-        <div className="availe_con">
-          {friends.map((val, key) => {
-            if (val.vtxt === "verified") {
-              if (val.c_usr !== Cookies.get("c_usr")) {
-                if (val.states === "Admin") {
-                  return (
-                    <div key={key} className="cardd_1 shadow">
-                      <div
-                        className="bgimg"
-                        style={{
-                          backgroundImage: `linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url(${val.coverpic})`,
-                        }}
-                      >
-                        <div className="profile_co">
-                          <img
-                            onError={(e) => {
-                              e.target.src =
-                                "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ=";
-                            }}
-                            src={val.profilepic}
-                            style={{pointerEvents: 'none', objectPosition: '0px 0px', objectFit: 'cover'}}
-                            alt=""
-                          />
-                        </div>
-                        <div className="big_name">{val.names + " (Admin)"}</div>
-                      </div>
-                      <div className="namve_s text-center">
-                        <div className="buttons">
-                          <button
-                            onClick={(e) => {
-                              window.open("../#/Profile/" + val.c_usr, "_self");
-                            }}
-                            className="btn btn-outline-danger"
-                          >
-                            View profile
-                          </button>
-         
-                        </div>
-                      </div>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div key={key} className="cardd_1 shadow">
-                      <div
-                        className="bgimg"
-                        style={{
-                          backgroundImage: `linear-gradient(to bottom, #00000000 0%, var(--mainbg) 90%), url(${val.coverpic})`,
-                        }}
-                      >
-                        <div className="profile_co">
-                          <img
-                            onError={(e) => {
-                              e.target.src =
-                                "https://media.istockphoto.com/id/1011988208/vector/404-error-like-laptop-with-dead-emoji-cartoon-flat-minimal-trend-modern-simple-logo-graphic.jpg?s=612x612&w=0&k=20&c=u_DL0ZH5LkX57_25Qa8hQVIl41F9D0zXlTgkWNnHRkQ=";
-                            }}
-                            src={val.profilepic}
-                            alt=""
-                          />
-                        </div>
-                        <div className="big_name">{val.names}</div>
-                      </div>
-                      <div className="namve_s text-center">
-                        <div className="buttons">
-                          <button
-                            onClick={(e) => {
-                              window.open("../#/Profile/" + val.c_usr, "_self");
-                            }}
-                            className="btn btn-outline-danger"
-                          >
-                            View profile
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                }
+                </div>
+               )
               }
-            }
-          })}
-        </div>
+            })
+           }
+       </div>
       </div>
-
-      <div className="h1" style={{ height: "20vh" }}></div>
-    </div>
+     }
+    </>
   );
 }
 
