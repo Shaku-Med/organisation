@@ -16,6 +16,7 @@ function Profile({socket}) {
   const {auth, setauth, owner, setowner, resetstate, setresetstate, allusr, setallusr} = useContext(Connection);
 
 
+
   return (
    <>
     { 
@@ -23,6 +24,9 @@ function Profile({socket}) {
       allusr.map((val, key) => { 
         if(Cookies.get('c_usr')){ 
           if(Cookies.get("c_usr") !== null && Cookies.get("c_usr") === val.c_usr){ 
+
+            
+
             return ( 
               <div key={key} className="squiz_medown">
               <div className="our_home_con sqmefine">
@@ -43,7 +47,7 @@ function Profile({socket}) {
               </div>
                 <div className="long_buts shadow rounded">
                 <div className="in_sstat">
-                  <input onChange={async e => { 
+                  <input accept="image/*" onChange={async e => { 
                       let uids = uuid()
                       let refstore = ref(storage, `Picture/${uids}`)
                        localStorage.setItem("profile", uids)
@@ -85,6 +89,7 @@ function Profile({socket}) {
                 </div>
                 <div className="in_sstat">
                   <input
+                  accept="image/*"
                   onChange={async e => { 
                     let uids = uuid()
                     let refstore = ref(storage, `Coverpic/${uids}`)
