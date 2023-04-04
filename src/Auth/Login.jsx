@@ -114,7 +114,7 @@ function Login() {
         height: '100vh',
         objectPosition: '0px 0px',
         objectFit: 'cover'
-    }} src="../100507878_2610072155933527_621068420078632960_n.jpg" alt="" />
+    }} src="https://raw.githubusercontent.com/Shaku-Med/organisation/main/src/100507878_2610072155933527_621068420078632960_n.jpg" alt="" />
   <div className="sign_m">
     <motion.div  drag="y"   dragConstraints={{ top: -50, bottom: 0 }}  className="sign_upd_C">
         <div className="head h2">
