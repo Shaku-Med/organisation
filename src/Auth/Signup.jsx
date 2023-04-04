@@ -120,7 +120,7 @@ function Signup() {
             height: '100vh',
             objectPosition: '0px 0px',
             objectFit: 'cover'
-        }} src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.6435-9/100507878_2610072155933527_621068420078632960_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=yNIZU8T65l0AX8o4yD5&_nc_ht=scontent-lga3-1.xx&oh=00_AfAOkKFFyjMxS0rP29o3vcOpGAhzIZb_3c7Uk3J4XfU-kA&oe=64534013" alt="" />
+        }} src="./100507878_2610072155933527_621068420078632960_n.jpg" alt="" />
       <div className="sign_m">
         <motion.div  drag="y"   dragConstraints={{ top: -50, bottom: 0 }}  className="sign_upd_C">
             <div className="head h2">
