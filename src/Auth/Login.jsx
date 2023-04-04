@@ -114,7 +114,7 @@ function Login() {
         height: '100vh',
         objectPosition: '0px 0px',
         objectFit: 'cover'
-    }} src="https://scontent-lga3-2.xx.fbcdn.net/v/t1.6435-9/100507878_2610072155933527_621068420078632960_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=vMAfOyh6LN4AX8EUirz&_nc_ht=scontent-lga3-2.xx&oh=00_AfBQldxY8FWNalvAkADkX_Zjcq9VtDkXgeaDwL2AUl2ivw&oe=63E08D93" alt="" />
+    }} src="../100507878_2610072155933527_621068420078632960_n.jpg" alt="" />
   <div className="sign_m">
     <motion.div  drag="y"   dragConstraints={{ top: -50, bottom: 0 }}  className="sign_upd_C">
         <div className="head h2">
