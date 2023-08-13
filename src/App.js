@@ -32,15 +32,8 @@ function App() {
 
     const timer = Math.floor(Math.random() * 8000) - 10
 
-     setTimeout(() => {
-      if(window.top !== window.self){ 
-        setstates({ 
-          login: false,
-          frame: true,
-        })
-      }
-      else { 
-        if(Cookie.get("c_usr") && Cookie.get("xs")){ 
+
+    if(Cookie.get("c_usr") && Cookie.get("xs")){ 
           if(Cookie.get("c_usr") !== null && Cookie.get("xs") !== null){ 
             setstates({ 
               login: false,
@@ -60,8 +53,7 @@ function App() {
             frame: false,
           })
         }
-      }
-     }, timer);
+    
     }, [auth]);
 
     
