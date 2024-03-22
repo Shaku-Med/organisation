@@ -6,8 +6,8 @@ import Preview from './Screen/Preview'
 import Profile from './Screen/Profile'
 
 import io from 'socket.io-client'
-
-const socket = new io("https://orgappbackend.mohamedbrima.repl.co", { 
+// orgappbackend.mohamedbrima.repl.co",
+const socket = new io("https://orgbsocket.onrender.com", { 
   reconnectionAttempts: 4
 })
 
